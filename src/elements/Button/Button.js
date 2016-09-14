@@ -61,7 +61,7 @@ function Button(props) {
   const ElementType = getElementType(Button, props, () => {
     if (label || labeled || attached) return 'div'
   })
-  const tabIndex = ElementType === 'div' ? 0 : undefined
+  const tabIndex = ElementType === 'div' ? 0 : props.tabIndex
 
   if (children) {
     const classes = cx('ui', baseClasses, labeledClasses, 'button', className)
