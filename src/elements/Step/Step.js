@@ -8,7 +8,7 @@ import {
   META,
   useKeyOnly,
 } from '../../lib'
-import { createIcon } from '../../factories'
+import { Icon } from '../../elements'
 import StepContent from './StepContent'
 import StepDescription from './StepDescription'
 import StepGroup from './StepGroup'
@@ -45,7 +45,7 @@ function Step(props) {
       href={href}
       onClick={handleClick}
     >
-      {!children && createIcon(icon)}
+      {!children && Icon.create(icon)}
       {children || <StepContent description={description} title={title} />}
     </ElementType>
   )
@@ -58,10 +58,7 @@ Step._meta = {
 
 Step.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** A step can be highlighted as active. */
   active: PropTypes.bool,

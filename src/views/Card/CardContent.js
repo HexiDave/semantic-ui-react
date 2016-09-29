@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
 import {
+  createShorthand,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -31,9 +32,9 @@ function CardContent(props) {
 
   return (
     <ElementType {...rest} className={classes}>
-      {header && <CardHeader content={header} />}
-      {meta && <CardMeta content={meta} />}
-      {description && <CardDescription content={description} />}
+      {createShorthand(CardHeader, val => ({ content: val }), header)}
+      {createShorthand(CardMeta, val => ({ content: val }), meta)}
+      {createShorthand(CardDescription, val => ({ content: val }), description)}
     </ElementType>
   )
 }
@@ -46,10 +47,7 @@ CardContent._meta = {
 
 CardContent.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** Primary content of the CardContent. Mutually exclusive with all shorthand props. */
   children: customPropTypes.every([

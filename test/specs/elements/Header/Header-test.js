@@ -18,7 +18,7 @@ describe('Header', () => {
   common.propKeyOnlyToClassName(Header, 'sub')
 
   common.propKeyAndValueToClassName(Header, 'floated')
-  common.propKeyOrValueToClassName(Header, 'attached')
+  common.propKeyOrValueAndKeyToClassName(Header, 'attached')
 
   common.propValueOnlyToClassName(Header, 'color')
   common.propValueOnlyToClassName(Header, 'size')
@@ -26,23 +26,31 @@ describe('Header', () => {
   common.implementsIconProp(Header)
   common.implementsImageProp(Header)
   common.implementsTextAlignProp(Header)
+  common.implementsShorthandProp(Header, {
+    propKey: 'subheader',
+    ShorthandComponent: HeaderSubheader,
+    mapValueToProps: val => ({ content: val }),
+  })
 
   describe('icon', () => {
     it('adds an icon class when true', () => {
       shallow(<Header icon />)
         .should.have.className('icon')
     })
-    it('does not add an Icon when true', () => {
-      shallow(<Header icon />)
-        .should.not.have.descendants('Icon')
-    })
-    it('adds an Icon when given a name', () => {
-      shallow(<Header icon='user' />)
-        .should.have.descendants('Icon')
-    })
     it('does not add an icon class given a name', () => {
       shallow(<Header icon='user' />)
         .should.not.have.className('icon')
+    })
+  })
+
+  describe('image', () => {
+    it('adds an image class when true', () => {
+      shallow(<Header image />)
+        .should.have.className('image')
+    })
+    it('does not add an Image when true', () => {
+      shallow(<Header image />)
+        .should.not.have.descendants('Image')
     })
   })
 
@@ -51,14 +59,17 @@ describe('Header', () => {
       shallow(<Header content='foo' />)
         .should.contain.text('foo')
     })
-    it('adds child text when there is an image', () => {
-      shallow(<Header content='foo' image='foo.png' />)
-        .should.contain.text('foo')
+    it('is wrapped in HeaderContent when there is an image src', () => {
+      shallow(<Header image='foo.png' content='Bar' />)
+        .find('HeaderContent')
+        .shallow()
+        .should.contain.text('Bar')
     })
     it('is wrapped in HeaderContent when there is an icon name', () => {
       shallow(<Header icon='users' content='Friends' />)
         .find('HeaderContent')
-        .should.have.prop('children', 'Friends')
+        .shallow()
+        .should.contain.text('Friends')
     })
     it('is not wrapped in HeaderContent when icon is true', () => {
       const wrapper = shallow(<Header icon content='Friends' />)
@@ -69,14 +80,7 @@ describe('Header', () => {
   })
 
   describe('subheader', () => {
-    it('adds HeaderSubheader as child', () => {
-      const text = faker.hacker.phrase()
-
-      shallow(<Header subheader={text} />)
-        .find('HeaderSubheader')
-        .should.have.prop('content', text)
-    })
-    it('adds HeaderSubheader as child when given a name to icon prop', () => {
+    it('adds HeaderSubheader as child when there is an icon', () => {
       const text = faker.hacker.phrase()
 
       shallow(<Header icon='user' subheader={text} />)

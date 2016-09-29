@@ -3,6 +3,7 @@ import cx from 'classnames'
 
 import {
   childrenUtils,
+  createShorthand,
   customPropTypes,
   META,
   getElementType,
@@ -38,14 +39,13 @@ function DropdownItem(props) {
   )
   // add default dropdown icon if item contains another menu
   const iconName = icon || childrenUtils.someByType(children, 'DropdownMenu') && 'dropdown'
-  const iconClasses = cx(iconName, 'icon')
   const ElementType = getElementType(DropdownItem, props)
   const rest = getUnhandledProps(DropdownItem, props)
 
   return (
     <ElementType {...rest} className={classes} onClick={handleClick}>
-      {description && <span className='description'>{description}</span>}
-      {iconName && <Icon name={iconClasses} />}
+      {createShorthand('span', val => ({ className: 'description', children: val }), description)}
+      {Icon.create(iconName)}
       {text}
       {children}
     </ElementType>
@@ -60,10 +60,7 @@ DropdownItem._meta = {
 
 DropdownItem.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** Style as the currently chosen item. */
   active: PropTypes.bool,

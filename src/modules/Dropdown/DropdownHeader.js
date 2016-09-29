@@ -1,15 +1,34 @@
 import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
-import { getElementType, getUnhandledProps, META } from '../../lib'
+import {
+  customPropTypes,
+  getElementType,
+  getUnhandledProps,
+  META,
+} from '../../lib'
+import { Icon } from '../../elements'
 
 function DropdownHeader(props) {
-  const { className, children } = props
+  const { className, children, content, icon } = props
   const classes = cx('header', className)
   const rest = getUnhandledProps(DropdownHeader, props)
   const ElementType = getElementType(DropdownHeader, props)
 
-  return <ElementType className={classes} {...rest}>{children}</ElementType>
+  if (children) {
+    return (
+      <ElementType className={classes} {...rest}>
+        {children}
+      </ElementType>
+    )
+  }
+
+  return (
+    <ElementType className={classes} {...rest}>
+      {Icon.create(icon)}
+      {content}
+    </ElementType>
+  )
 }
 
 DropdownHeader._meta = {
@@ -20,16 +39,26 @@ DropdownHeader._meta = {
 
 DropdownHeader.propTypes = {
   /** An element type to render as (string or function) */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
-  /** Primary content */
-  children: PropTypes.node,
+  /** Primary content of the header, same as content. */
+  children: customPropTypes.every([
+    customPropTypes.disallow(['content', 'icon']),
+    PropTypes.node,
+  ]),
 
   /** Additional classes */
   className: PropTypes.node,
+
+  /** Primary content of the header, same as children. */
+  content: PropTypes.node,
+
+  /** Add an icon by icon name or pass an <Icon /> */
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.object,
+  ]),
 }
 
 export default DropdownHeader

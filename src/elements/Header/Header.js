@@ -2,6 +2,7 @@ import _ from 'lodash'
 import cx from 'classnames'
 import React, { PropTypes } from 'react'
 import {
+  createShorthand,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -12,7 +13,7 @@ import {
   useKeyOrValueAndKey,
   useKeyOnly,
 } from '../../lib'
-import { createIcon, createImage } from '../../factories'
+import { Icon, Image } from '../../elements'
 import HeaderSubheader from './HeaderSubheader'
 import HeaderContent from './HeaderContent'
 
@@ -29,14 +30,15 @@ function Header(props) {
     'ui',
     size,
     color,
-    useKeyOnly(icon === true, 'icon'),
-    useKeyOnly(sub, 'sub'),
-    useKeyOnly(dividing, 'dividing'),
-    useKeyOnly(block, 'block'),
     useKeyOrValueAndKey(attached, 'attached'),
-    useValueAndKey(floated, 'floated'),
-    useKeyOnly(inverted, 'inverted'),
+    useKeyOnly(block, 'block'),
     useKeyOnly(disabled, 'disabled'),
+    useKeyOnly(dividing, 'dividing'),
+    useValueAndKey(floated, 'floated'),
+    useKeyOnly(icon === true, 'icon'),
+    useKeyOnly(image === true, 'image'),
+    useKeyOnly(inverted, 'inverted'),
+    useKeyOnly(sub, 'sub'),
     useTextAlignProp(textAlign),
     className,
     'header',
@@ -44,25 +46,6 @@ function Header(props) {
 
   const ElementType = getElementType(Header, props)
   const rest = getUnhandledProps(Header, props)
-
-  if (icon && typeof icon !== 'boolean') {
-    return (
-      <ElementType {...rest} className={classes}>
-        {createIcon(icon)}
-        {content && <HeaderContent>{content}</HeaderContent>}
-        {subheader && <HeaderSubheader content={subheader} />}
-      </ElementType>
-    )
-  }
-
-  if (image) {
-    return (
-      <ElementType {...rest} className={classes}>
-        {createImage(image)} {content}
-        {subheader && <HeaderSubheader content={subheader} />}
-      </ElementType>
-    )
-  }
 
   if (children) {
     return (
@@ -72,10 +55,24 @@ function Header(props) {
     )
   }
 
+  if ((image && typeof image !== 'boolean') || (icon && typeof icon !== 'boolean')) {
+    return (
+      <ElementType {...rest} className={classes}>
+        {Icon.create(icon) || Image.create(image)}
+        {(content || subheader) && (
+          <HeaderContent>
+            {content}
+            {createShorthand(HeaderSubheader, val => ({ content: val }), subheader)}
+          </HeaderContent>
+        )}
+      </ElementType>
+    )
+  }
+
   return (
     <ElementType {...rest} className={classes}>
       {content}
-      {subheader && <HeaderSubheader content={subheader} />}
+      {createShorthand(HeaderSubheader, val => ({ content: val }), subheader)}
     </ElementType>
   )
 }
@@ -94,23 +91,13 @@ Header._meta = {
 
 Header.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** Additional classes */
   className: PropTypes.string,
 
   /** Primary content */
-  children: customPropTypes.every([
-    PropTypes.node,
-    customPropTypes.disallow(['image']),
-    customPropTypes.givenProps(
-      { icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.object]) },
-      customPropTypes.disallow(['icon']),
-    ),
-  ]),
+  children: PropTypes.node,
 
   /** Primary content.  Mutually exclusive with children. */
   content: customPropTypes.every([
@@ -122,23 +109,18 @@ Header.propTypes = {
   icon: customPropTypes.every([
     customPropTypes.disallow(['image']),
     customPropTypes.givenProps(
-      { children: PropTypes.node.isRequired },
-      PropTypes.bool,
-    ),
-    customPropTypes.givenProps(
-      { icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.object]) },
+      { icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.object]).isRequired },
       customPropTypes.disallow(['children']),
     ),
   ]),
 
   /** Add an image by img src or pass an <Image />. */
   image: customPropTypes.every([
-    customPropTypes.disallow(['children', 'icon']),
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.element,
-      PropTypes.object,
-    ]),
+    customPropTypes.disallow(['icon']),
+    customPropTypes.givenProps(
+      { image: PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.object]).isRequired },
+      customPropTypes.disallow(['children']),
+    ),
   ]),
 
   /** Color of the header. */

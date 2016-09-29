@@ -2,13 +2,13 @@ import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
 import {
+  createHTMLImage,
   customPropTypes,
   getElementType,
   getUnhandledProps,
   META,
   useKeyOnly,
 } from '../../lib'
-import { createImg } from '../../factories'
 
 function FeedExtra(props) {
   const { children, className, images, text } = props
@@ -25,7 +25,7 @@ function FeedExtra(props) {
     const imagesJSX = images.map((image, index) => {
       const key = [index, image].join('-')
 
-      return createImg(image, { key })
+      return createHTMLImage(image, { key })
     })
 
     return <ElementType {...rest} className={classes}>{imagesJSX}</ElementType>
@@ -42,10 +42,7 @@ FeedExtra._meta = {
 
 FeedExtra.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** Primary content of the FeedExtra. */
   children: PropTypes.node,

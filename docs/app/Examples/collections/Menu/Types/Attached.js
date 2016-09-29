@@ -1,14 +1,13 @@
 import React from 'react'
 import { Dropdown, Icon, Menu, Segment } from 'stardust'
 
-// TODO: Fix <Dropdown> usage
 // TODO: Update <Search> usage after its will be implemented
 
 const Attached = () => {
   return (
     <div>
       <Menu attached='top'>
-        <Menu.Item as={Dropdown} icon='wrench'>
+        <Dropdown as={Menu.Item} icon='wrench' simple>
           <Dropdown.Menu>
             <Dropdown.Item>
               <Icon name='dropdown icon' />
@@ -23,10 +22,10 @@ const Attached = () => {
             <Dropdown.Item>Save...</Dropdown.Item>
             <Dropdown.Item>Edit Permissions</Dropdown.Item>
             <Dropdown.Divider />
-            <div className='header'>Export</div>
+            <Dropdown.Header>Export</Dropdown.Header>
             <Dropdown.Item>Share</Dropdown.Item>
           </Dropdown.Menu>
-        </Menu.Item>
+        </Dropdown>
 
         <Menu.Menu position='right'>
           <div className='ui right aligned category search item'>

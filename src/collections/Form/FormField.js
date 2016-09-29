@@ -1,5 +1,4 @@
 import cx from 'classnames'
-import _ from 'lodash'
 import React, { PropTypes, createElement } from 'react'
 
 import {
@@ -71,7 +70,7 @@ function FormField(props) {
   }
 
   // pass label prop to controls that support it
-  if (control === Checkbox || control === Radio || _.has(control, 'propTypes.label')) {
+  if (control === Checkbox || control === Radio) {
     return (
       <ElementType className={classes}>
         {createElement(control, { ...controlProps, label })}
@@ -120,10 +119,7 @@ FormField._meta = {
 
 FormField.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /**
    * A form control component (i.e. Dropdown) or HTML tagName (i.e. 'input').

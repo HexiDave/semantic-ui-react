@@ -17,7 +17,7 @@
 [![Gemnasium](https://img.shields.io/gemnasium/TechnologyAdvice/stardust.svg?style=flat-square)](https://gemnasium.com/TechnologyAdvice/stardust)
 [![npm](https://img.shields.io/npm/v/stardust.svg?style=flat-square)](https://www.npmjs.com/package/stardust)
 
-Hey, we're in development. There are big changes taking place while we migrate to Semantic-UI-Org. Minor versions may introduce **breaking changes until the [v1.0][6] release**.  You should [**read the CHANGELOG**][18] and related issues/PRs to stay up to date.
+Hey, we're in development. Minor versions may introduce **breaking changes until the [v1.0][6] release**.  You should [**read the CHANGELOG**][18] and related issues/PRs to stay up to date.
 
 ### [Voice Your Opinion][19] :speech_balloon:
 
@@ -37,8 +37,9 @@ Help shape this library by weighing in on our [RFC (request for comments)][19] i
 - [Usage](#usage)
 - [Debugger](#debugger)
 - [How Can I Help?](#how-can-i-help)
-  - [v1.0 Migrations](#v10-migrations)
-  - [New Components](#new-components)
+  - [[v1.0 Migrations][15]](#v10-migrations15)
+  - [[Missing Components][17]](#missing-components17)
+  - [[Help Wanted Label][4]](#help-wanted-label4)
 - [Our Principles](#our-principles)
 - [Support](#support)
 - [Releasing](#releasing)
@@ -144,7 +145,7 @@ Any other issue labeled [`help wanted`][4] is ready for a PR.
 | x Input         |                 |                 | _ Popup         |                    |
 | x Label         |                 |                 | x Progress      |                    |
 | x List          |                 |                 | x Rating        |                    |
-| x Loader        |                 |                 | _ Search        |                    |
+| x Loader        |                 |                 | x Search        |                    |
 | x Rail          |                 |                 | _ Shape         |                    |
 | _ Reveal        |                 |                 | _ Sidebar       |                    |
 | x Segment       |                 |                 | _ Sticky        |                    |
@@ -165,7 +166,7 @@ npm run release:patch
 
 Made with :heart: [@TechnologyAdvice][9], a ridiculous [place to work][16].
 
-[1]: https://github.com/TechnologyAdvice/stardust/blob/master/CONTRIBUTING.md
+[1]: https://github.com/TechnologyAdvice/stardust/blob/master/.github/CONTRIBUTING.md
 [2]: https://technologyadvice.github.io/stardust/
 [3]: https://facebook.github.io/react/
 [4]: https://github.com/TechnologyAdvice/stardust/labels/help%20wanted

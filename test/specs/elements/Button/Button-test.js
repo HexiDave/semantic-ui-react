@@ -12,11 +12,16 @@ describe('Button', () => {
   common.hasUIClassName(Button)
   common.hasSubComponents(Button, [ButtonContent, ButtonGroup, ButtonOr])
   common.implementsIconProp(Button)
-  common.implementsLabelProp(Button)
+  common.implementsLabelProp(Button, {
+    shorthandDefaultProps: {
+      basic: true,
+      pointing: 'left',
+    },
+  })
 
   common.propKeyOnlyToClassName(Button, 'active')
-  common.propKeyOrValueToClassName(Button, 'animated')
-  common.propKeyOrValueToClassName(Button, 'attached')
+  common.propKeyOrValueAndKeyToClassName(Button, 'animated')
+  common.propKeyOrValueAndKeyToClassName(Button, 'attached')
   common.propKeyOnlyToClassName(Button, 'basic')
   common.propKeyOnlyToClassName(Button, 'circular')
   common.propValueOnlyToClassName(Button, 'color')
@@ -25,7 +30,7 @@ describe('Button', () => {
   common.propKeyAndValueToClassName(Button, 'floated')
   common.propKeyOnlyToClassName(Button, 'fluid')
   common.propKeyOnlyToClassName(Button, 'inverted')
-  common.propKeyOrValueToClassName(Button, 'labeled')
+  common.propKeyOrValueAndKeyToClassName(Button, 'labeled')
   common.propKeyOnlyToClassName(Button, 'loading')
   common.propKeyOnlyToClassName(Button, 'primary')
   common.propKeyOnlyToClassName(Button, 'negative')

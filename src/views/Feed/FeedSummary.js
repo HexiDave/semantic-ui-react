@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
 import {
+  createShorthand,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -18,7 +19,7 @@ function FeedSummary(props) {
   return (
     <ElementType {...rest} className={classes}>
       {children || summary }
-      {date && <FeedDate date={date} />}
+      {createShorthand(FeedDate, val => ({ date: val }), date)}
     </ElementType>
   )
 }
@@ -31,10 +32,7 @@ FeedSummary._meta = {
 
 FeedSummary.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** Primary content of the FeedSummary. */
   children: customPropTypes.every([

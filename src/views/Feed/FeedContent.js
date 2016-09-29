@@ -2,6 +2,7 @@ import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
 import {
+  createShorthand,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -20,11 +21,11 @@ function FeedContent(props) {
 
   return (
     <ElementType {...rest} className={classes}>
-      {date && <FeedDate date={date} />}
-      {summary && <FeedSummary summary={summary} />}
-      {extraImages && <FeedExtra images={extraImages} />}
-      {extraText && <FeedExtra text={extraText} />}
-      {meta && <FeedMeta meta={meta} />}
+      {createShorthand(FeedDate, val => ({ date: val }), date)}
+      {createShorthand(FeedSummary, val => ({ summary: val }), summary)}
+      {createShorthand(FeedExtra, val => ({ images: val }), extraImages)}
+      {createShorthand(FeedExtra, val => ({ text: val }), extraText)}
+      {createShorthand(FeedMeta, val => ({ meta: val }), meta)}
       {children || content}
     </ElementType>
   )
@@ -38,10 +39,7 @@ FeedContent._meta = {
 
 FeedContent.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** Primary content of the FeedContent. */
   children: customPropTypes.every([

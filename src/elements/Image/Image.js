@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 
 import {
   getElementType,
+  createShorthandFactory,
   customPropTypes,
   getUnhandledProps,
   META,
@@ -76,10 +77,7 @@ Image._meta = {
 
 Image.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** An image can specify its vertical alignment */
   verticalAlign: PropTypes.oneOf(Image._meta.props.verticalAlign),
@@ -162,5 +160,7 @@ Image.defaultProps = {
   as: 'img',
   ui: true,
 }
+
+Image.create = createShorthandFactory(Image, value => ({ src: value }))
 
 export default Image

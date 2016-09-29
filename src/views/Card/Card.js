@@ -9,7 +9,7 @@ import {
   SUI,
   useKeyOnly,
 } from '../../lib'
-import { createImage } from '../../factories'
+import { Image } from '../../elements'
 import CardContent from './CardContent'
 import CardDescription from './CardDescription'
 import CardGroup from './CardGroup'
@@ -63,7 +63,7 @@ function Card(props) {
 
   return (
     <ElementType {...rest} className={classes} href={href} onClick={handleClick}>
-      {createImage(image)}
+      {Image.create(image)}
       {(description || header || meta) && (
         <CardContent description={description} header={header} meta={meta} />
       )}
@@ -82,10 +82,7 @@ Card._meta = {
 
 Card.propTypes = {
   /** An element type to render as (string or function). */
-  as: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  as: customPropTypes.as,
 
   /** A Card can center itself inside its container. */
   centered: PropTypes.bool,

@@ -1,4 +1,5 @@
-import { task } from 'gulp'
+import del from 'del'
+import { task, series } from 'gulp'
 import loadPlugins from 'gulp-load-plugins'
 import webpack from 'webpack'
 
@@ -7,7 +8,20 @@ import config from '../../config'
 const g = loadPlugins()
 const { log, PluginError } = g.util
 
-task('dll', (cb) => {
+// ----------------------------------------
+// Clean
+// ----------------------------------------
+
+task('clean:dll', (cb) => {
+  del.sync(config.paths.base('dll'))
+  cb()
+})
+
+// ----------------------------------------
+// Build
+// ----------------------------------------
+
+task('build:dll', (cb) => {
   const webpackDLLConfig = require('../../webpack.dll')
   const compiler = webpack(webpackDLLConfig)
 
@@ -31,3 +45,12 @@ task('dll', (cb) => {
     cb(err)
   })
 })
+
+// ----------------------------------------
+// Default
+// ----------------------------------------
+
+task('dll', series(
+  'clean:dll',
+  'build:dll',
+))

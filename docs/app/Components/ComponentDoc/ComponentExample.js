@@ -1,16 +1,40 @@
+import _ from 'lodash'
+import { html } from 'js-beautify'
 import React, { Component, createElement, PropTypes } from 'react'
-import Highlight from 'react-highlight'
 
 import { exampleContext } from 'docs/app/utils'
+import Editor from 'docs/app/Components/Editor/Editor'
 import { getUnhandledProps } from 'src/lib'
-import { Grid, Header, Icon } from 'stardust'
+import { Grid, Header, Icon, Divider } from 'stardust'
+
+const showCodeStyle = {
+  position: 'absolute',
+  textAlign: 'right',
+  top: '1rem',
+  right: '1rem',
+}
 
 const codeIconStyle = {
-  position: 'absolute',
-  top: '0.6em',
-  right: '0.5em',
-  fontSize: '1.5em',
   fontWeight: 'bold',
+}
+
+const titleStyle = {
+  margin: 0,
+}
+
+const headerColumnStyle = {
+  // provide room for absolutely positions toggle code icons
+  minHeight: '4em',
+  paddingRight: '7em',
+}
+
+const childrenStyle = {
+  paddingTop: 0,
+}
+
+const renderedExampleStyle = {
+  paddingTop: 0,
+  paddingBottom: 0,
 }
 
 /**
@@ -28,14 +52,20 @@ export default class ComponentExample extends Component {
 
   constructor(props, context) {
     super(props, context)
-    this.state = { showCode: false }
+    this.state = {
+      // show code for direct links to examples
+      showCode: props.title && _.kebabCase(props.title) === location.hash.replace('#', ''),
+      showHTML: false,
+    }
     this.fileContents = props.exampleSrc || require(`!raw!docs/app/Examples/${props.examplePath}`)
     this.component = exampleContext(`./${props.examplePath}.js`).default
   }
 
-  toggleShowCode = () => {
-    this.setState({ showCode: !this.state.showCode })
-  }
+  getKebabExamplePath = () => _.kebabCase(this.props.examplePath)
+
+  toggleShowCode = () => this.setState({ showCode: !this.state.showCode })
+
+  toggleShowHTML = () => this.setState({ showHTML: !this.state.showHTML })
 
   renderCode = () => {
     const { showCode } = this.state
@@ -43,35 +73,85 @@ export default class ComponentExample extends Component {
 
     return (
       <Grid.Column>
-        <Highlight className='language-javascript'>
-          {this.fileContents}
-        </Highlight>
+        <Divider horizontal>JSX</Divider>
+        <Editor id={`${this.getKebabExamplePath()}-jsx`} value={this.fileContents.replace(/\n$/, '')} readOnly />
+      </Grid.Column>
+    )
+  }
+
+  renderHTML = () => {
+    const { showHTML } = this.state
+    if (!showHTML) return
+
+    const innerHTML = _.get(document.querySelector(`.${this.getKebabExamplePath()}`), 'innerHTML', '')
+    // add new lines between almost all adjacent elements
+    // moves inline elements to their own line
+      .replace(/><(?!\/i|\/label|\/span|option)/g, '>\n<')
+
+    const beautifiedHTML = html(innerHTML, {
+      indent_size: 2,
+      indent_char: ' ',
+      wrap_attributes: 'auto',
+      wrap_attributes_indent_size: 2,
+      end_with_newline: false,
+    })
+
+    return (
+      <Grid.Column>
+        <Divider horizontal>Rendered HTML</Divider>
+        <Editor id={`${this.getKebabExamplePath()}-html`} mode='html' value={beautifiedHTML} readOnly />
       </Grid.Column>
     )
   }
 
   render() {
     const { children, description, title } = this.props
+    const { showCode, showHTML } = this.state
     const rest = getUnhandledProps(ComponentExample, this.props)
+    const active = showCode || showHTML
+
+    const style = { marginBottom: '4em', transition: 'box-shadow 0 ease-out' }
+    if (active) {
+      style.transitionDuration = '0.2s'
+      style.boxShadow = '0 0 30px #ccc'
+    }
 
     return (
-      <Grid columns={1} style={{ marginBottom: '4em' }}>
-        <Grid.Column>
-          <Grid>
-            <Grid.Column width={12}>
-              {title && <Header as='h3' style={{ marginBottom: 0 }}>{title}</Header>}
-              {description ? <p>{description}</p> : children}
-            </Grid.Column>
-            <Grid.Column width={4} textAlign='right'>
-              <Icon name='code link' color='grey' onClick={this.toggleShowCode} style={codeIconStyle} />
-            </Grid.Column>
-          </Grid>
+      <Grid style={style} divided={active} columns='1'>
+        <Grid.Column style={headerColumnStyle}>
+          {title && <Header as='h3' style={titleStyle}>{title}</Header>}
+          {description && <p>{description}</p>}
+          <div style={showCodeStyle}>
+            <Icon
+              link
+              bordered
+              name='code'
+              color={showCode ? 'green' : 'grey'}
+              onClick={this.toggleShowCode}
+              style={codeIconStyle}
+            />
+            <Icon
+              link
+              bordered
+              name='html5'
+              color={showHTML ? 'green' : 'grey'}
+              onClick={this.toggleShowHTML}
+            />
+          </div>
         </Grid.Column>
-        {description && children && <Grid.Column>{children}</Grid.Column>}
-        <Grid.Column className='rendered-example'>
+        {children && (
+          <Grid.Column style={childrenStyle}>
+            {children}
+          </Grid.Column>
+        )}
+        <Grid.Column
+          className={`rendered-example ${this.getKebabExamplePath()}`}
+          style={renderedExampleStyle}
+        >
           {createElement(this.component, rest)}
         </Grid.Column>
-        {this.renderCode()}
+        {showCode && this.renderCode()}
+        {showHTML && this.renderHTML()}
       </Grid>
     )
   }
