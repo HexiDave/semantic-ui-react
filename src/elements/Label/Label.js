@@ -40,7 +40,7 @@ function Label(props) {
     useKeyOnly(circular, 'circular'),
     useKeyOnly(floating, 'floating'),
     useKeyOnly(horizontal, 'horizontal'),
-    useKeyOnly(image === true, 'image'),
+    useKeyOnly(image, 'image'),
     useKeyOnly(empty, 'empty'),
     useKeyOnly(tag, 'tag'),
     useValueAndKey(attached, 'attached'),
