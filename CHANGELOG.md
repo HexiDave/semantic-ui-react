@@ -1,11 +1,60 @@
 # Change Log
 
+## [v0.51.0](https://github.com/TechnologyAdvice/stardust/tree/v0.51.0) (2016-10-02)
+[Full Changelog](https://github.com/TechnologyAdvice/stardust/compare/v0.50.0...v0.51.0)
+
+**Merged pull requests:**
+
+- fix\(Feed\): update propTypes, shorthand and docs [\#575](https://github.com/TechnologyAdvice/stardust/pull/575) ([levithomason](https://github.com/levithomason))
+
+## [v0.50.0](https://github.com/TechnologyAdvice/stardust/tree/v0.50.0) (2016-10-02)
+[Full Changelog](https://github.com/TechnologyAdvice/stardust/compare/v0.49.0...v0.50.0)
+
+**Merged pull requests:**
+
+- feat\(Modal\): Enable usage without wrapper, add custom Portal [\#571](https://github.com/TechnologyAdvice/stardust/pull/571) ([jcarbo](https://github.com/jcarbo))
+
+## [v0.49.0](https://github.com/TechnologyAdvice/stardust/tree/v0.49.0) (2016-10-01)
+[Full Changelog](https://github.com/TechnologyAdvice/stardust/compare/v0.48.3...v0.49.0)
+
+**Implemented enhancements:**
+
+- feat\(docs\): editable examples [\#566](https://github.com/TechnologyAdvice/stardust/pull/566) ([levithomason](https://github.com/levithomason))
+- fix\(List\): Update to v1 API [\#551](https://github.com/TechnologyAdvice/stardust/pull/551) ([layershifter](https://github.com/layershifter))
+
+**Merged pull requests:**
+
+- fix\(customPropTypes\): fix logic and warning messages [\#579](https://github.com/TechnologyAdvice/stardust/pull/579) ([levithomason](https://github.com/levithomason))
+- test\(commonTests\): ensure top level exports [\#572](https://github.com/TechnologyAdvice/stardust/pull/572) ([levithomason](https://github.com/levithomason))
+
+## [v0.48.3](https://github.com/TechnologyAdvice/stardust/tree/v0.48.3) (2016-09-29)
+[Full Changelog](https://github.com/TechnologyAdvice/stardust/compare/v0.48.2...v0.48.3)
+
+**Implemented enhancements:**
+
+- feat\(Segment\): add `size` prop [\#568](https://github.com/TechnologyAdvice/stardust/issues/568)
+- feat\(Segment\): add `size` prop [\#569](https://github.com/TechnologyAdvice/stardust/pull/569) ([layershifter](https://github.com/layershifter))
+
+**Fixed bugs:**
+
+- fix\(dll\): fix dll build order [\#563](https://github.com/TechnologyAdvice/stardust/pull/563) ([levithomason](https://github.com/levithomason))
+
+## [v0.48.2](https://github.com/TechnologyAdvice/stardust/tree/v0.48.2) (2016-09-28)
+[Full Changelog](https://github.com/TechnologyAdvice/stardust/compare/v0.48.1...v0.48.2)
+
+## [v0.48.1](https://github.com/TechnologyAdvice/stardust/tree/v0.48.1) (2016-09-28)
+[Full Changelog](https://github.com/TechnologyAdvice/stardust/compare/v0.48.0...v0.48.1)
+
+**Implemented enhancements:**
+
+- Spread unhandled props on the root element [\#91](https://github.com/TechnologyAdvice/stardust/issues/91)
+
 ## [v0.48.0](https://github.com/TechnologyAdvice/stardust/tree/v0.48.0) (2016-09-28)
 [Full Changelog](https://github.com/TechnologyAdvice/stardust/compare/v0.47.2...v0.48.0)
 
 **Implemented enhancements:**
 
-- Dropdown: Support label prop [\#291](https://github.com/TechnologyAdvice/stardust/issues/291)
+- feat\(Dropdown\): support label prop [\#291](https://github.com/TechnologyAdvice/stardust/issues/291)
 - feat\(ComponentExample\): show code on direct link [\#557](https://github.com/TechnologyAdvice/stardust/pull/557) ([levithomason](https://github.com/levithomason))
 - feat\(Input\): update to v1 API [\#281](https://github.com/TechnologyAdvice/stardust/pull/281) ([jamiehill](https://github.com/jamiehill))
 
