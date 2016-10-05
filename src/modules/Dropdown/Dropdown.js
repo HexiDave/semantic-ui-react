@@ -887,8 +887,8 @@ export default class Dropdown extends Component {
           active={isActive(opt.value)}
           onClick={this.handleItemClick}
           selected={selectedIndex === i}
+          text={text}
           {...opt}
-          {text}
           // Needed for handling click events on disabled items
           style={{ ...opt.style, pointerEvents: 'all' }}
         />
