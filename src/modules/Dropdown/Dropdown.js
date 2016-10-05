@@ -831,26 +831,14 @@ export default class Dropdown extends Component {
     // if no item could be found for a given state value the selected item will be undefined
     // compact the selectedItems so we only have actual objects left
     return _.map(_.compact(selectedItems), (item) => {
-      return item.image ? (
-        <Label
-          key={item.value}
-          as={'a'}
-          value={item.value}
-          onRemove={this.handleLabelRemove}
-          image
-        >
-          <img src={item.image}/>
-          {item.text}
-        </Label>
-      ) : (
-        <Label
-          key={item.value}
-          as={'a'}
-          content={item.text}
-          value={item.value}
-          onRemove={this.handleLabelRemove}
-        />
-      )
+      return <Label
+        key={item.value}
+        as={'a'}
+        content={item.text}
+        value={item.value}
+        onRemove={this.handleLabelRemove}
+        image={item.image && {src: item.image}}
+      />
     })
   }
 
