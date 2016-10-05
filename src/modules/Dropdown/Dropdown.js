@@ -832,7 +832,18 @@ export default class Dropdown extends Component {
     // if no item could be found for a given state value the selected item will be undefined
     // compact the selectedItems so we only have actual objects left
     return _.map(_.compact(selectedItems), (item) => {
-      return (
+      return item.image ? (
+        <Label
+          key={item.value}
+          as={'a'}
+          value={item.value}
+          onRemove={this.handleLabelRemove}
+          image
+        >
+          <img src={item.image}/>
+          {item.text}
+        </Label>
+      ) : (
         <Label
           key={item.value}
           as={'a'}
@@ -857,16 +868,32 @@ export default class Dropdown extends Component {
       ? optValue => _.includes(value, optValue)
       : optValue => optValue === value
 
-    return _.map(options, (opt, i) => (
-      <DropdownItem
-        key={`${opt.value}-${i}`}
-        active={isActive(opt.value)}
-        onClick={this.handleItemClick}
-        selected={selectedIndex === i}
-        {...opt}
-        // Needed for handling click events on disabled items
-        style={{ ...opt.style, pointerEvents: 'all' }}
-      />
+    return _.map(options, ({text, ...opt}, i) => (
+      opt.image ? (
+        <DropdownItem
+          key={`${opt.value}-${i}`}
+          active={isActive(opt.value)}
+          onClick={this.handleItemClick}
+          selected={selectedIndex === i}
+          {...opt}
+          // Needed for handling click events on disabled items
+          style={{ ...opt.style, pointerEvents: 'all' }}
+        >
+          <img src={opt.image}/>
+          {text}
+        </DropdownItem>
+      ) : (
+        <DropdownItem
+          key={`${opt.value}-${i}`}
+          active={isActive(opt.value)}
+          onClick={this.handleItemClick}
+          selected={selectedIndex === i}
+          {...opt}
+          {text}
+          // Needed for handling click events on disabled items
+          style={{ ...opt.style, pointerEvents: 'all' }}
+        />
+      )
     ))
   }
 
