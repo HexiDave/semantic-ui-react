@@ -8,8 +8,9 @@ import ComponentExamples from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 import docgenInfo from '../../docgenInfo.json'
 
+import { repoURL } from 'docs/app/utils'
 import { META } from 'src/lib'
-import * as stardust from 'src'
+import * as semanticUIReact from 'src'
 import { Divider, Grid, Header, Icon, List } from 'src'
 
 const docgenPaths = _.keys(docgenInfo)
@@ -25,12 +26,12 @@ const getPosixPath = (componentName) => getDocgenPath(componentName).replace(pat
 
 const getGithubSourceUrl = (componentName) => {
   const posixPath = getPosixPath(componentName)
-  return `https://github.com/TechnologyAdvice/stardust/blob/master/${posixPath}`
+  return `${repoURL}/blob/master/${posixPath}`
 }
 
 const getGithubEditUrl = (componentName) => {
   const posixPath = getPosixPath(componentName)
-  return `https://github.com/TechnologyAdvice/stardust/edit/master/${posixPath}`
+  return `${repoURL}/edit/master/${posixPath}`
 }
 
 const getSemanticUIDocsUrl = (_meta) => {
@@ -87,7 +88,7 @@ export default class ComponentDoc extends Component {
     const seeTags = _.filter(docgen.docBlock.tags, ['title', 'see'])
 
     const seeLinks = _.map(seeTags, ({ description }) => {
-      const seeMeta = _.get(stardust[description], '_meta')
+      const seeMeta = _.get(semanticUIReact[description], '_meta')
       if (!seeMeta) return
 
       const { type, name } = seeMeta
@@ -154,7 +155,7 @@ export default class ComponentDoc extends Component {
     const selectedDocgen = docgenInfo[getDocgenPath(showPropsFor)]
     const toggleIcon = `toggle ${showPropsFor ? 'on' : 'off'}`
 
-    const subComponents = _.flatMap(stardust, SDComponent => _.filter(SDComponent, staticValue => (
+    const subComponents = _.flatMap(semanticUIReact, SDComponent => _.filter(SDComponent, staticValue => (
       _.get(staticValue, '_meta.parent') === _meta.name
     )))
 
@@ -213,7 +214,7 @@ export default class ComponentDoc extends Component {
           {docgen.docBlock.description || (
             <span>
               <a href={getGithubEditUrl(_meta.name)}>Add a description</a>. Instructions are{' '}
-              <a href={'https://github.com/TechnologyAdvice/stardust/blob/master/.github/CONTRIBUTING.md#components'}>
+              <a href={`${repoURL}/blob/master/.github/CONTRIBUTING.md#components` }>
                 here.
               </a>
               {' '}Description is in the SUI Docs, right there <Icon name='pointing right' />

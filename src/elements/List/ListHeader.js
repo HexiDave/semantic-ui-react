@@ -11,9 +11,8 @@ import {
 function ListHeader(props) {
   const { children, className } = props
   const classes = cx(className, 'header')
-
-  const ElementType = getElementType(ListHeader, props)
   const rest = getUnhandledProps(ListHeader, props)
+  const ElementType = getElementType(ListHeader, props)
 
   return <ElementType {...rest} className={classes}>{children}</ElementType>
 }
@@ -28,10 +27,10 @@ ListHeader.propTypes = {
   /** An element type to render as (string or function). */
   as: customPropTypes.as,
 
-  /** Primary content of the ListHeader. */
+  /** Primary content. */
   children: PropTypes.node,
 
-  /** Classes to add to the ListHeader className. */
+  /** Additional classes. */
   className: PropTypes.string,
 }
 

@@ -21,7 +21,7 @@ import ListList from './ListList'
 
 /**
  * A list groups related content
- * */
+ **/
 function List(props) {
   const {
     animated,
@@ -40,6 +40,7 @@ function List(props) {
     selection,
     verticalAlign,
   } = props
+
   const classes = cx(
     'ui',
     size,
@@ -58,9 +59,8 @@ function List(props) {
     'list',
     className,
   )
-
-  const ElementType = getElementType(List, props)
   const rest = getUnhandledProps(List, props)
+  const ElementType = getElementType(List, props)
 
   return <ElementType {...rest} className={classes}>{children}</ElementType>
 }
@@ -89,10 +89,10 @@ List.propTypes = {
   /** A list can divide its items into cells. */
   celled: PropTypes.bool,
 
-  /** Primary content of the List. */
+  /** Primary content. */
   children: PropTypes.node,
 
-  /** Classes to add to the List className. */
+  /** Additional classes. */
   className: PropTypes.string,
 
   /** A list can show divisions between content. */

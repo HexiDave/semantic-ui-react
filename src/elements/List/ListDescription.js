@@ -11,9 +11,8 @@ import {
 function ListDescription(props) {
   const { children, className } = props
   const classes = cx(className, 'description')
-
-  const ElementType = getElementType(ListDescription, props)
   const rest = getUnhandledProps(ListDescription, props)
+  const ElementType = getElementType(ListDescription, props)
 
   return <ElementType {...rest} className={classes}>{children}</ElementType>
 }
@@ -28,10 +27,10 @@ ListDescription.propTypes = {
   /** An element type to render as (string or function). */
   as: customPropTypes.as,
 
-  /** Primary content of the ListDescription. */
+  /** Primary content. */
   children: PropTypes.node,
 
-  /** Classes to add to the ListDescription className. */
+  /** Additional classes. */
   className: PropTypes.string,
 }
 

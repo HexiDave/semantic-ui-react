@@ -27,11 +27,10 @@ function SegmentGroup(props) {
     className,
     'segments',
   )
-
   const rest = getUnhandledProps(SegmentGroup, props)
   const ElementType = getElementType(SegmentGroup, props)
 
-  return <ElementType className={classes} {...rest}>{children}</ElementType>
+  return <ElementType {...rest} className={classes}>{children}</ElementType>
 }
 
 SegmentGroup._meta = {
@@ -47,10 +46,10 @@ SegmentGroup.propTypes = {
   /** An element type to render as (string or function). */
   as: customPropTypes.as,
 
-  /** Class names for custom styling. */
+  /** Additional classes. */
   className: PropTypes.string,
 
-  /** Nested segments for this Segment group */
+  /** Primary content. */
   children: PropTypes.node,
 
   /** A segment may take up only as much space as is necessary */

@@ -12,12 +12,12 @@ import {
 function ListList(props) {
   const { children, className } = props
 
+  const rest = getUnhandledProps(ListList, props)
   const ElementType = getElementType(ListList, props)
   const classes = cx(
     useKeyOnly(ElementType !== 'ul' && ElementType !== 'ol', 'list'),
     className,
   )
-  const rest = getUnhandledProps(ListList, props)
 
   return <ElementType {...rest} className={classes}>{children}</ElementType>
 }
@@ -32,10 +32,10 @@ ListList.propTypes = {
   /** An element type to render as (string or function). */
   as: customPropTypes.as,
 
-  /** Primary content of the ListList. */
+  /** Primary content. */
   children: PropTypes.node,
 
-  /** Classes to add to the ListList className. */
+  /** Additional classes. */
   className: PropTypes.string,
 }
 

@@ -67,7 +67,6 @@ function Segment(props) {
     className,
     'segment',
   )
-
   const rest = getUnhandledProps(Segment, props)
   const ElementType = getElementType(Segment, props)
 
@@ -102,13 +101,13 @@ Segment.propTypes = {
   /** A basic segment has no special formatting */
   basic: PropTypes.bool,
 
-  /** Segment tag body content. */
-  children: PropTypes.any,
+  /** Primary content. */
+  children: PropTypes.node,
 
   /** A segment can be circular */
   circular: PropTypes.bool,
 
-  /** Class names for custom styling. */
+  /** Additional classes. */
   className: PropTypes.string,
 
   /** A segment can clear floated content */

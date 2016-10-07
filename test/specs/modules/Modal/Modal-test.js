@@ -6,7 +6,7 @@ import ModalHeader from 'src/modules/Modal/ModalHeader'
 import ModalContent from 'src/modules/Modal/ModalContent'
 import ModalActions from 'src/modules/Modal/ModalActions'
 import ModalDescription from 'src/modules/Modal/ModalDescription'
-import { Portal } from 'src/addons'
+import Portal from 'src/addons/Portal/Portal'
 
 import { keyboardKey } from 'src/lib'
 import { domEvent, sandbox } from 'test/utils'
@@ -104,6 +104,18 @@ describe('Modal', () => {
       shallow(<Modal open={false} />)
         .find('Portal')
         .should.have.prop('open', false)
+    })
+
+    it('is not passed to Modal', () => {
+      shallow(<Modal open />)
+        .find('Portal')
+        .children()
+        .should.not.have.prop('open')
+
+      shallow(<Modal open={false} />)
+        .find('Portal')
+        .children()
+        .should.not.have.prop('open')
     })
 
     it('does not show the modal when false', () => {

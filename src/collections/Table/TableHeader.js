@@ -15,9 +15,8 @@ function TableHeader(props) {
     useKeyOnly(fullWidth, 'full-width'),
     className
   )
-
-  const ElementType = getElementType(TableHeader, props)
   const rest = getUnhandledProps(TableHeader, props)
+  const ElementType = getElementType(TableHeader, props)
 
   return <ElementType {...rest} className={classes}>{children}</ElementType>
 }
@@ -36,10 +35,10 @@ TableHeader.propTypes = {
   /** An element type to render as (string or function). */
   as: customPropTypes.as,
 
-  /** Primary content of the TableHeader. */
+  /** Primary content. */
   children: PropTypes.node,
 
-  /** Classes that will be added to the TableHeader className. */
+  /** Additional classes. */
   className: PropTypes.string,
 
   /** A definition table can have a full width header or footer, filling in the gap left by the first column. */
