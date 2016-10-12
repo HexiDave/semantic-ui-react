@@ -1,5 +1,66 @@
 # Change Log
 
+## [v0.56.0](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.56.0) (2016-10-11)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.55.2...v0.56.0)
+
+**Implemented enhancements:**
+
+- BREAKING CHANGE: Loader component refactor [\#654](https://github.com/Semantic-Org/Semantic-UI-React/pull/654) ([layershifter](https://github.com/layershifter))
+
+## [v0.55.2](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.55.2) (2016-10-11)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.55.1...v0.55.2)
+
+**Implemented enhancements:**
+
+- refactor\(Rail\): update component [\#658](https://github.com/Semantic-Org/Semantic-UI-React/pull/658) ([layershifter](https://github.com/layershifter))
+- refactor\(Grid\): update Component [\#656](https://github.com/Semantic-Org/Semantic-UI-React/pull/656) ([layershifter](https://github.com/layershifter))
+
+**Fixed bugs:**
+
+- refactor\\(Rail\\): update component [\#658](https://github.com/Semantic-Org/Semantic-UI-React/pull/658) ([layershifter](https://github.com/layershifter))
+
+## [v0.55.1](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.55.1) (2016-10-09)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.55.0...v0.55.1)
+
+**Implemented enhancements:**
+
+- refactor\(Rating\): add rating icon component [\#640](https://github.com/Semantic-Org/Semantic-UI-React/pull/640) ([layershifter](https://github.com/layershifter))
+
+**Fixed bugs:**
+
+- fix\(Dropdown\): reopens after switching back to browser window [\#627](https://github.com/Semantic-Org/Semantic-UI-React/issues/627)
+- fix\(ItemImage\): wrap image to prevent vertical strech [\#646](https://github.com/Semantic-Org/Semantic-UI-React/pull/646) ([debrice](https://github.com/debrice))
+
+**Merged pull requests:**
+
+- fix\(Dropdown\): blur dropdown on close\(\) [\#628](https://github.com/Semantic-Org/Semantic-UI-React/pull/628) ([Chris-R3](https://github.com/Chris-R3))
+
+## [v0.55.0](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.55.0) (2016-10-09)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.54.5...v0.55.0)
+
+**Merged pull requests:**
+
+- BREAKING CHANGE: update Confirm to Modal v1 API [\#634](https://github.com/Semantic-Org/Semantic-UI-React/pull/634) ([levithomason](https://github.com/levithomason))
+
+## [v0.54.5](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.54.5) (2016-10-08)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.54.4...v0.54.5)
+
+**Implemented enhancements:**
+
+- feat\(ListItem\): add shorthand [\#589](https://github.com/Semantic-Org/Semantic-UI-React/issues/589)
+- \<Popup /\> Component [\#193](https://github.com/Semantic-Org/Semantic-UI-React/issues/193)
+- \<Comment /\> Component [\#187](https://github.com/Semantic-Org/Semantic-UI-React/issues/187)
+- feat\(List\): Shorthand for list and list items [\#637](https://github.com/Semantic-Org/Semantic-UI-React/pull/637) ([jcarbo](https://github.com/jcarbo))
+- feat\(Comment\): Add component [\#584](https://github.com/Semantic-Org/Semantic-UI-React/pull/584) ([layershifter](https://github.com/layershifter))
+- feat\(Popup\): add component [\#570](https://github.com/Semantic-Org/Semantic-UI-React/pull/570) ([debrice](https://github.com/debrice))
+
+## [v0.54.4](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.54.4) (2016-10-08)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.54.3...v0.54.4)
+
+**Fixed bugs:**
+
+- fix\(Label\): fix shorthand create method [\#644](https://github.com/Semantic-Org/Semantic-UI-React/pull/644) ([levithomason](https://github.com/levithomason))
+
 ## [v0.54.3](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.54.3) (2016-10-07)
 [Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.54.2...v0.54.3)
 
@@ -10,7 +71,6 @@
 
 **Closed issues:**
 
-- Bug: Grid doesn't resize properly when window resizes [\#639](https://github.com/Semantic-Org/Semantic-UI-React/issues/639)
 - fix\(Form\): not render icon in select [\#620](https://github.com/Semantic-Org/Semantic-UI-React/issues/620)
 - Move docs to react.semantic-ui.com [\#611](https://github.com/Semantic-Org/Semantic-UI-React/issues/611)
 - Standardize childKey and shorthand props [\#449](https://github.com/Semantic-Org/Semantic-UI-React/issues/449)
