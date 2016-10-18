@@ -1,5 +1,59 @@
 # Change Log
 
+## [v0.56.4](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.56.4) (2016-10-17)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.56.3...v0.56.4)
+
+**Merged pull requests:**
+
+- fix\(Dropdown\): over zealous propType warnings [\#694](https://github.com/Semantic-Org/Semantic-UI-React/pull/694) ([levithomason](https://github.com/levithomason))
+
+## [v0.56.3](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.56.3) (2016-10-17)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.56.2...v0.56.3)
+
+**Fixed bugs:**
+
+- Dropdown 'openOnSpace' triggered through TextArea [\#692](https://github.com/Semantic-Org/Semantic-UI-React/issues/692)
+- fix\(Dropdown\): blur virtual DOM with real DOM [\#693](https://github.com/Semantic-Org/Semantic-UI-React/pull/693) ([levithomason](https://github.com/levithomason))
+
+## [v0.56.2](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.56.2) (2016-10-17)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.56.1...v0.56.2)
+
+**Implemented enhancements:**
+
+- feat\(Modal\): support opening/closing multiple modals [\#636](https://github.com/Semantic-Org/Semantic-UI-React/issues/636)
+- feat\(Portal\): Improve rendering [\#666](https://github.com/Semantic-Org/Semantic-UI-React/pull/666) ([jcarbo](https://github.com/jcarbo))
+
+**Fixed bugs:**
+
+- feat\\(Portal\\): Improve rendering [\#666](https://github.com/Semantic-Org/Semantic-UI-React/pull/666) ([jcarbo](https://github.com/jcarbo))
+
+**Closed issues:**
+
+- fix\(Menu\): SyntaxError:Unexpected token\(6:8\) [\#691](https://github.com/Semantic-Org/Semantic-UI-React/issues/691)
+
+**Merged pull requests:**
+
+- feat\(ButtonGroup\): Add missing props [\#687](https://github.com/Semantic-Org/Semantic-UI-React/pull/687) ([jcarbo](https://github.com/jcarbo))
+- docs\(Icon\): refactor naming and descriptions, use function components [\#685](https://github.com/Semantic-Org/Semantic-UI-React/pull/685) ([dpkwhan](https://github.com/dpkwhan))
+- docs\(Input\): refactor, add trailing . in description, fix imports [\#679](https://github.com/Semantic-Org/Semantic-UI-React/pull/679) ([dpkwhan](https://github.com/dpkwhan))
+
+## [v0.56.1](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.56.1) (2016-10-14)
+[Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.56.0...v0.56.1)
+
+**Fixed bugs:**
+
+- Menu.Item allows icon to be set as boolean [\#681](https://github.com/Semantic-Org/Semantic-UI-React/issues/681)
+
+**Merged pull requests:**
+
+- fix\(MenuItem\): allow bool/string icon proptype [\#683](https://github.com/Semantic-Org/Semantic-UI-React/pull/683) ([levithomason](https://github.com/levithomason))
+- docs\(Breadcrumb\): refactor and use index.js [\#671](https://github.com/Semantic-Org/Semantic-UI-React/pull/671) ([dpkwhan](https://github.com/dpkwhan))
+- docs\(Step\): refactor and fix an issue [\#668](https://github.com/Semantic-Org/Semantic-UI-React/pull/668) ([dpkwhan](https://github.com/dpkwhan))
+- docs\(Card\): refactor, add trailing . in description and fix typo [\#667](https://github.com/Semantic-Org/Semantic-UI-React/pull/667) ([dpkwhan](https://github.com/dpkwhan))
+- docs\(progress\): refactor, add trailing . to description and use stateless functional expression [\#664](https://github.com/Semantic-Org/Semantic-UI-React/pull/664) ([dpkwhan](https://github.com/dpkwhan))
+- docs\(confirm\): add trailing . to description [\#663](https://github.com/Semantic-Org/Semantic-UI-React/pull/663) ([dpkwhan](https://github.com/dpkwhan))
+- docs\(Radio\): refactor, use stateless functional expression and fix a typo [\#662](https://github.com/Semantic-Org/Semantic-UI-React/pull/662) ([dpkwhan](https://github.com/dpkwhan))
+
 ## [v0.56.0](https://github.com/Semantic-Org/Semantic-UI-React/tree/v0.56.0) (2016-10-11)
 [Full Changelog](https://github.com/Semantic-Org/Semantic-UI-React/compare/v0.55.2...v0.56.0)
 
