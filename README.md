@@ -38,10 +38,10 @@ Help shape this library by weighing in on our [RFC (request for comments)][19] i
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Install](#install)
-- [Usage](#usage)
+- [Installation & Usage](#installation--usage)
 - [Debugger](#debugger)
 - [How Can I Help?](#how-can-i-help)
+  - [[Good First Contribution][21]](#good-first-contribution21)
   - [[v1.0 Migrations][15]](#v10-migrations15)
   - [[Missing Components][17]](#missing-components17)
   - [[Help Wanted Label][4]](#help-wanted-label4)
@@ -52,46 +52,9 @@ Help shape this library by weighing in on our [RFC (request for comments)][19] i
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Install
+## Installation & Usage
 
-```sh
-npm i semantic-ui-react -S
-```
-
-## Usage
-
-**App.js**
-
-```js
-import React from 'react'
-import { Button } from 'semantic-ui-react'
-
-export default () => (
-  <Button>Hello</Button>
-)
-```
-
-**index.html**
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Semantic-UI-React</title>
-
-  <!-- SUI CSS -->
-  <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.css" rel="stylesheet">
-</head>
-<body>
-  <script src="bundle.js"></script>
-</body>
-</html>
-```
-
-We then use [Webpack][13] to create `bundle.js` from `App.js` and include it in `index.html`.
-
-For more complete examples, check out the [Doc Site][2].
+See the [Documentation][2] for an introduction, usage information, and extensive examples.
 
 ## Debugger
 
@@ -108,6 +71,10 @@ Once you change the flag, you need to refresh your browser to see the changes in
 ## How Can I Help?
 
 Our [CONTRIBUTING.md][1] is a step-by-step setup and development guide. It is meant to be read from top to bottom.  Once you're up to speed, each issue here includes more information on how you can help:
+
+### [Good First Contribution][21]
+
+Issues labeled [`good first contribution`][21] are a great way to ease into development on this project. 
 
 ### [v1.0 Migrations][15]
 
@@ -138,11 +105,11 @@ Any other issue labeled [`help wanted`][4] is ready for a PR.
 
 |    Elements     |   Collections   |      Views      |     Modules     |     Behaviors      |
 |-----------------|-----------------|-----------------|-----------------|--------------------|
-| ✓ Button        | ✓ Breadcrumb    |   Advertisement | ✓ Accordion     | ✓ Form Validation  |
+| ✓ Button        | ✓ Breadcrumb    |   Advertisement | ✓ Accordion     |   Form Validation  |
 | ✓ Container     | ✓ Form          | ✓ Card          | ✓ Checkbox      | *API (NA)*         |
-| ✓ Divider       | ✓ Grid          | ✓ Comment       |   Dimmer        | *Visibility (NA)*  |
+| ✓ Divider       | ✓ Grid          | ✓ Comment       | ✓ Dimmer        | *Visibility (NA)*  |
 | ✓ Flag          | ✓ Menu          | ✓ Feed          | ✓ Dropdown      |                    |
-| ✓ Header        | ✓ Message       | ✓ Item          |   Embed         |                    |
+| ✓ Header        | ✓ Message       | ✓ Item          | ✓ Embed         |                    |
 | ✓ Icon          | ✓ Table         | ✓ Statistic     | ✓ Modal         |                    |
 | ✓ Image         |                 |                 |   Nag           |                    |
 | ✓ Input         |                 |                 | ✓ Popup         |                    |
@@ -150,7 +117,7 @@ Any other issue labeled [`help wanted`][4] is ready for a PR.
 | ✓ List          |                 |                 | ✓ Rating        |                    |
 | ✓ Loader        |                 |                 | ✓ Search        |                    |
 | ✓ Rail          |                 |                 |   Shape         |                    |
-|   Reveal        |                 |                 |   Sidebar       |                    |
+| ✓ Reveal        |                 |                 |   Sidebar       |                    |
 | ✓ Segment       |                 |                 |   Sticky        |                    |
 | ✓ Step          |                 |                 |   Tab           |                    |
 |                 |                 |                 |   Transition    |                    |
@@ -168,6 +135,12 @@ npm run release:patch
 ## Credit
 
 Made with :heart: [@TechnologyAdvice][9], a ridiculous [place to work][16].
+
+Big thanks to our [contributors][20], especially:
+
+- @jamiehill for early engineering and support
+- @jcarbo for thoughtful engineering and continual support
+- @layershifter for bringing momentum and continual support
 
 [1]: https://github.com/Semantic-Org/Semantic-UI-React/blob/master/.github/CONTRIBUTING.md
 [2]: https://semantic-org.github.io/Semantic-UI-React/
@@ -188,3 +161,5 @@ Made with :heart: [@TechnologyAdvice][9], a ridiculous [place to work][16].
 [17]: https://github.com/Semantic-Org/Semantic-UI-React/issues?q=is%3Aopen+label%3A%22help+wanted%22+label%3Aenhancement
 [18]: https://github.com/Semantic-Org/Semantic-UI-React/blob/master/CHANGELOG.md
 [19]: https://github.com/Semantic-Org/Semantic-UI-React/issues?q=is%3Aopen+RFC+label%3ARFC
+[20]: https://github.com/Semantic-Org/Semantic-UI-React/graphs/contributors
+[21]: https://github.com/Semantic-Org/Semantic-UI-React/labels/good%20first%20contribution

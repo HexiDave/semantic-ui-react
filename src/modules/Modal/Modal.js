@@ -12,6 +12,7 @@ import {
   customPropTypes,
   getElementType,
   getUnhandledProps,
+  isBrowser,
   makeDebugger,
   META,
   useKeyOnly,
@@ -56,6 +57,18 @@ class Modal extends Component {
     /** The node where the modal should mount.. */
     mountNode: PropTypes.any,
 
+    /** Called when a close event happens */
+    onClose: PropTypes.func,
+
+    /** Called when the portal is mounted on the DOM */
+    onMount: PropTypes.func,
+
+    /** Called when an open event happens */
+    onOpen: PropTypes.func,
+
+    /** Called when the portal is unmounted from the DOM */
+    onUnmount: PropTypes.func,
+
     /** A modal can vary in size */
     size: PropTypes.oneOf(_meta.props.size),
 
@@ -67,6 +80,8 @@ class Modal extends Component {
 
   static defaultProps = {
     dimmer: true,
+    // Do not access document when server side rendering
+    mountNode: isBrowser ? document.body : null,
   }
 
   static _meta = _meta
@@ -77,20 +92,24 @@ class Modal extends Component {
 
   state = {}
 
-  componentDidMount() {
-    debug('componentDidMount()')
-    this.setPosition()
-  }
-
   componentWillUnmount() {
     debug('componentWillUnmount()')
-    this.handleUnmount()
+    this.handlePortalUnmount()
   }
 
-  handleMount = () => {
-    debug('handleOpen()')
-    const { dimmer } = this.props
-    const mountNode = this.getMountNode()
+  handleClose = (e) => {
+    const { onClose } = this.props
+    if (onClose) onClose(e, this.props)
+  }
+
+  handleOpen = (e) => {
+    const { onOpen } = this.props
+    if (onOpen) onOpen(e, this.props)
+  }
+
+  handlePortalMount = (e) => {
+    debug('handlePortalMount()')
+    const { dimmer, mountNode } = this.props
 
     if (dimmer) {
       debug('adding dimmer')
@@ -101,26 +120,31 @@ class Modal extends Component {
         mountNode.classList.add('blurring')
       }
     }
+
+    this.setPosition()
+
+    const { onMount } = this.props
+    if (onMount) onMount(e, this.props)
   }
 
-  handleUnmount = () => {
-    debug('handleUnmount()')
-
-    const mountNode = this.getMountNode()
+  handlePortalUnmount = (e) => {
+    debug('handlePortalUnmount()')
 
     // Always remove all dimmer classes.
-    // If the dimmer value changes while the modal is open,
-    //   then removing its current value could leave cruft classes previously added.
+    // If the dimmer value changes while the modal is open, then removing its
+    // current value could leave cruft classes previously added.
+    const { mountNode } = this.props
     mountNode.classList.remove('blurring', 'dimmable', 'dimmed', 'scrollable')
-  }
 
-  getMountNode = () => {
-    return this.props.mountNode || document.body
+    cancelAnimationFrame(this.animationRequestId)
+
+    const { onUnmount } = this.props
+    if (onUnmount) onUnmount(e, this.props)
   }
 
   setPosition = () => {
     if (this._modalNode) {
-      const mountNode = this.getMountNode()
+      const { mountNode } = this.props
       const { height } = this._modalNode.getBoundingClientRect()
       const scrolling = height >= window.innerHeight
 
@@ -141,11 +165,15 @@ class Modal extends Component {
       }
     }
 
-    requestAnimationFrame(this.setPosition)
+    this.animationRequestId = requestAnimationFrame(this.setPosition)
   }
 
   render() {
-    const { basic, children, className, dimmer, size } = this.props
+    const { basic, children, className, dimmer, mountNode, size } = this.props
+
+    // Short circuit when server side rendering
+    if (!isBrowser) return null
+
     const { marginTop, scrolling } = this.state
     const classes = cx(
       'ui',
@@ -192,9 +220,11 @@ class Modal extends Component {
         closeOnDocumentClick={false}
         {...portalProps}
         className={dimmerClasses}
-        mountNode={this.getMountNode()}
-        onMount={this.handleMount}
-        onUnmount={this.handleUnmount}
+        mountNode={mountNode}
+        onClose={this.handleClose}
+        onMount={this.handlePortalMount}
+        onOpen={this.handleOpen}
+        onUnmount={this.handlePortalUnmount}
       >
         {modalJSX}
       </Portal>

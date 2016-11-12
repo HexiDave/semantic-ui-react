@@ -84,6 +84,9 @@ export { default as Loader } from './elements/Loader'
 
 export { default as Rail } from './elements/Rail'
 
+export { default as Reveal } from './elements/Reveal'
+export { default as RevealContent } from './elements/Reveal/RevealContent'
+
 export { default as Segment } from './elements/Segment'
 export { default as SegmentGroup } from './elements/Segment/SegmentGroup'
 
@@ -100,11 +103,16 @@ export { default as AccordionTitle } from './modules/Accordion/AccordionTitle'
 
 export { default as Checkbox } from './modules/Checkbox'
 
+export { default as Dimmer } from './modules/Dimmer'
+export { default as DimmerDimmable } from './modules/Dimmer/DimmerDimmable'
+
 export { default as Dropdown } from './modules/Dropdown'
 export { default as DropdownDivider } from './modules/Dropdown/DropdownDivider'
 export { default as DropdownHeader } from './modules/Dropdown/DropdownHeader'
 export { default as DropdownItem } from './modules/Dropdown/DropdownItem'
 export { default as DropdownMenu } from './modules/Dropdown/DropdownMenu'
+
+export { default as Embed } from './modules/Embed'
 
 export { default as Modal } from './modules/Modal'
 export { default as ModalActions } from './modules/Modal/ModalActions'

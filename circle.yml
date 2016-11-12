@@ -9,6 +9,7 @@ machine:
 
 test:
   pre:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - npm run lint
   post:
     - bash <(curl -s https://codecov.io/bash)
@@ -19,6 +20,9 @@ deployment:
     commands:
       - git config --global user.email "devteam+deweybot@technologyadvice.com"
       - git config --global user.name "deweybot"
-      # changelog generator is crashing, skipping for manual updates for now
-      # - $(npm bin)/ta-script circle_ci/create_changelog
+      # TODO: release and changelog scripts need to handle a remote that may have changed since they started to run
+      # - NODE_ENV=production npm run build:commonjs
+      # - NODE_ENV=production npm run build:umd
+      # - ta-script npm/auto-release
+      # - ta-script circle_ci/create_changelog
       - NODE_ENV=production npm run deploy:docs
