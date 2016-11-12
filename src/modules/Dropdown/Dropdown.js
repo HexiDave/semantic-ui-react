@@ -969,6 +969,7 @@ export default class Dropdown extends Component {
         onClick: this.handleLabelClick,
         onRemove: this.handleLabelRemove,
         value: item.value,
+		image: item.image,
       }
 
       return Label.create(
