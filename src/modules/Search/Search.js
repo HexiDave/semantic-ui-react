@@ -44,6 +44,9 @@ export default class Search extends Component {
     // Behavior
     // ------------------------------------
 
+    /** Input properties */
+    inputProps: PropTypes.object,
+
     /** Shorthand for Icon. */
     icon: PropTypes.oneOfType([
       PropTypes.node,
@@ -147,6 +150,7 @@ export default class Search extends Component {
   }
 
   static defaultProps = {
+    inputProps: {},
     icon: 'search',
     minCharacters: 1,
     noResultsMessage: 'No results found.',
@@ -485,7 +489,7 @@ export default class Search extends Component {
   // ----------------------------------------
 
   renderSearchInput = () => {
-    const { icon, placeholder } = this.props
+    const { inputProps, icon, placeholder } = this.props
     const { value } = this.state
 
     return (
@@ -498,6 +502,7 @@ export default class Search extends Component {
         onClick={this.handleInputClick}
         input={{ className: 'prompt', tabIndex: '0', autoComplete: 'off' }}
         icon={icon}
+        {...inputProps}
       />
     )
   }
