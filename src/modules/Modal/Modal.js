@@ -160,11 +160,12 @@ class Modal extends Component {
 
       const currentCount = mountCountValue === undefined ? 0 : mountCountValue - 1;
 
-      if (currentCount === 0) {
+      if (currentCount <= 0) {
         mountNode.classList.remove(className);
+        delete mountNode[countName];
       }
 
-      mountNode[countName] = currentCount;
+      mountNode[countName] = Math.max(currentCount, 0);
     })
   }
 
