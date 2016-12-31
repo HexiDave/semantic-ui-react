@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import cx from 'classnames'
 import React, { Component, PropTypes } from 'react'
 
@@ -41,10 +42,20 @@ export default class Dimmer extends Component {
     /** A disabled dimmer cannot be activated */
     disabled: PropTypes.bool,
 
-    /** Called with (event, props) after user's click. */
+    /**
+     * Called on click.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
     onClick: PropTypes.func,
 
-    /** Handles click outside Dimmer's content, but inside Dimmer area. */
+    /**
+     * Handles click outside Dimmer's content, but inside Dimmer area.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
     onClickOutside: PropTypes.func,
 
     /** A dimmer can be formatted to have its colors inverted. */
@@ -102,10 +113,10 @@ export default class Dimmer extends Component {
     const rest = getUnhandledProps(Dimmer, this.props)
     const ElementType = getElementType(Dimmer, this.props)
 
-    const childrenJSX = (children || content) && (
+    const childrenJSX = (_.isNil(children) ? content : children) && (
         <div className='content'>
           <div className='center' ref={center => (this.center = center)}>
-            { children || content }
+            { _.isNil(children) ? content : children }
           </div>
         </div>
       )

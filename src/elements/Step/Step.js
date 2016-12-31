@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import cx from 'classnames'
 import React, { Component, PropTypes } from 'react'
 
@@ -50,7 +51,13 @@ export default class Step extends Component {
     /** Render as an `a` tag instead of a `div` and adds the href attribute. */
     href: PropTypes.string,
 
-    /** Render as an `a` tag instead of a `div` and called with event on Step click. */
+    /**
+     * Called on click. When passed, the component will render as an `a`
+     * tag by default instead of a `div`.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
     onClick: PropTypes.func,
 
     /** A step can show a ordered sequence of steps. Passed from StepGroup. */
@@ -73,7 +80,7 @@ export default class Step extends Component {
   handleClick = (e) => {
     const { onClick } = this.props
 
-    if (onClick) onClick(e)
+    if (onClick) onClick(e, this.props)
   }
 
   render() {
@@ -104,7 +111,7 @@ export default class Step extends Component {
       if (onClick) return 'a'
     })
 
-    if (children) {
+    if (!_.isNil(children)) {
       return <ElementType {...rest} className={classes} href={href} onClick={this.handleClick}>{children}</ElementType>
     }
 

@@ -8,6 +8,7 @@ import { getUnhandledProps } from 'src/lib'
 function TestComponent(props) {
   return <div {...getUnhandledProps(TestComponent, props)} />
 }
+TestComponent._meta = { name: 'TestComponent' }
 
 beforeEach(() => {
   delete TestComponent.propTypes
@@ -20,6 +21,10 @@ describe('getUnhandledProps', () => {
     TestComponent.propTypes = { 'data-remove-me': PropTypes.string }
     shallow(<TestComponent />)
       .should.not.have.prop('data-remove-me', 'thanks')
+  })
+  it('removes the proprietary childKey prop', () => {
+    shallow(<TestComponent childKey={1} />)
+      .should.not.have.prop('childKey')
   })
   it('removes props defined in defaultProps', () => {
     TestComponent.defaultProps = { 'data-remove-me': 'thanks' }

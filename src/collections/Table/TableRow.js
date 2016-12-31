@@ -45,7 +45,7 @@ function TableRow(props) {
   const rest = getUnhandledProps(TableRow, props)
   const ElementType = getElementType(TableRow, props)
 
-  if (children) {
+  if (!_.isNil(children)) {
     return <ElementType {...rest} className={classes}>{children}</ElementType>
   }
 
@@ -112,6 +112,6 @@ TableRow.propTypes = {
   warning: PropTypes.bool,
 }
 
-TableRow.create = createShorthandFactory(TableRow, cells => ({ cells }))
+TableRow.create = createShorthandFactory(TableRow, cells => ({ cells }), true)
 
 export default TableRow

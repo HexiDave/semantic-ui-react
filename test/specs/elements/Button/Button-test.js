@@ -7,6 +7,8 @@ import ButtonOr from 'src/elements/Button/ButtonOr'
 import * as common from 'test/specs/commonTests'
 import { sandbox } from 'test/utils'
 
+const syntheticEvent = { preventDefault: () => undefined }
+
 describe('Button', () => {
   common.isConformant(Button)
   common.hasUIClassName(Button)
@@ -47,22 +49,6 @@ describe('Button', () => {
     shallow(<Button />)
       .first()
       .should.have.tagName('button')
-  })
-
-  it('adds tabIndex=0 when tag type is div', () => {
-    shallow(<Button as='div' />)
-      .should.have.prop('tabIndex', 0)
-  })
-
-  describe('onClick', () => {
-    it('is called when clicked', () => {
-      const handleClick = sandbox.spy()
-
-      shallow(<Button type='submit' onClick={handleClick} />)
-        .simulate('click')
-
-      handleClick.should.have.been.calledOnce()
-    })
   })
 
   describe('attached', () => {
@@ -138,6 +124,49 @@ describe('Button', () => {
         .should.have.tagName('button')
       shallow(<Button labelPosition='right' icon='user' />)
         .should.have.tagName('button')
+    })
+  })
+
+  describe('onClick', () => {
+    it('is called when clicked', () => {
+      const handleClick = sandbox.spy()
+
+      shallow(<Button type='submit' onClick={handleClick} />)
+        .simulate('click', syntheticEvent)
+
+      handleClick.should.have.been.calledOnce()
+    })
+
+    it('is not called when button is disabled', () => {
+      const handleClick = sandbox.spy()
+
+      shallow(<Button type='submit' disabled onClick={handleClick} />)
+        .simulate('click', syntheticEvent)
+
+      handleClick.should.not.have.been.calledOnce()
+    })
+  })
+
+  describe('tabIndex', () => {
+    it('is not set by default', () => {
+      shallow(<Button />)
+        .should.not.have.prop('tabIndex')
+    })
+    it('defaults to 0 as div', () => {
+      shallow(<Button as='div' />)
+        .should.have.prop('tabIndex', 0)
+    })
+    it('defaults to -1 when disabled', () => {
+      shallow(<Button disabled />)
+        .should.have.prop('tabIndex', -1)
+    })
+    it('can be set explicitly', () => {
+      shallow(<Button tabIndex={123} />)
+        .should.have.prop('tabIndex', 123)
+    })
+    it('can be set explicitly when disabled', () => {
+      shallow(<Button tabIndex={123} disabled />)
+        .should.have.prop('tabIndex', 123)
     })
   })
 })

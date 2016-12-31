@@ -32,6 +32,45 @@ describe('DropdownItem', () => {
     }),
   })
 
+  describe('aria', () => {
+    it('should render DropdownItem as role=option', () => {
+      const wrapper = shallow(<DropdownItem />)
+      wrapper.should.have.prop('role', 'option')
+    })
+    it('should render DropdownItem with children as role=option', () => {
+      const wrapper = shallow(<DropdownItem>Text</DropdownItem>)
+      wrapper.should.have.prop('role', 'option')
+    })
+    it('should render DropdownItem with description as role=option', () => {
+      const wrapper = shallow(<DropdownItem description='Text' />)
+      wrapper.should.have.prop('role', 'option')
+    })
+    it('should render disabled DropdownItem with aria-disabled', () => {
+      const wrapper = shallow(<DropdownItem disabled />)
+      wrapper.should.have.prop('aria-disabled', true)
+    })
+    it('should render normal DropdownItem without aria-disabled', () => {
+      const wrapper = shallow(<DropdownItem />)
+      wrapper.should.not.have.prop('aria-disabled')
+    })
+    it('should render active DropdownItem with aria-checked', () => {
+      const wrapper = shallow(<DropdownItem active />)
+      wrapper.should.have.prop('aria-checked', true)
+    })
+    it('should render normal DropdownItem without aria-disabled', () => {
+      const wrapper = shallow(<DropdownItem />)
+      wrapper.should.not.have.prop('aria-checked')
+    })
+    it('should render selected DropdownItem with aria-selected', () => {
+      const wrapper = shallow(<DropdownItem selected />)
+      wrapper.should.have.prop('aria-selected', true)
+    })
+    it('should render normal DropdownItem without aria-selected', () => {
+      const wrapper = shallow(<DropdownItem />)
+      wrapper.should.not.have.prop('aria-selected')
+    })
+  })
+
   describe('text', () => {
     it('renders with wrapping span when description', () => {
       const wrapper = shallow(<DropdownItem text='hey' description='description' />)
@@ -48,6 +87,21 @@ describe('DropdownItem', () => {
     })
   })
 
+  describe('content', () => {
+    it('renders text if no content', () => {
+      const wrapper = shallow(<DropdownItem text='hey' />)
+
+      wrapper.text().should.include('hey')
+    })
+
+    it('renders content if present', () => {
+      const wrapper = shallow(<DropdownItem text='hey' content='you' />)
+
+      wrapper.text().should.not.include('hey')
+      wrapper.text().should.include('you')
+    })
+  })
+
   describe('onClick', () => {
     it('omitted when not defined', () => {
       const click = () => shallow(<DropdownItem />).simulate('click')
@@ -59,7 +113,7 @@ describe('DropdownItem', () => {
 
       const value = faker.hacker.phrase()
       const event = { target: null }
-      const props = { value, foo: 'bar' }
+      const props = { value, 'data-foo': 'bar' }
 
       shallow(<DropdownItem onClick={spy} {...props} />)
         .simulate('click', event)

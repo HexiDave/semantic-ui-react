@@ -1,7 +1,9 @@
+import _ from 'lodash'
 import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
 import {
+  createShorthandFactory,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -14,7 +16,7 @@ function HeaderSubheader(props) {
   const rest = getUnhandledProps(HeaderSubheader, props)
   const ElementType = getElementType(HeaderSubheader, props)
 
-  return <ElementType {...rest} className={classes}>{children || content}</ElementType>
+  return <ElementType {...rest} className={classes}>{_.isNil(children) ? content : children}</ElementType>
 }
 
 HeaderSubheader._meta = {
@@ -36,5 +38,7 @@ HeaderSubheader.propTypes = {
   /** Shorthand for primary content. */
   content: customPropTypes.contentShorthand,
 }
+
+HeaderSubheader.create = createShorthandFactory(HeaderSubheader, content => ({ content }))
 
 export default HeaderSubheader

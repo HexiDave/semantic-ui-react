@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import cx from 'classnames'
 import React, { Component, PropTypes } from 'react'
 
@@ -66,7 +67,13 @@ export default class Card extends Component {
     /** Shorthand for CardMeta. */
     meta: customPropTypes.itemShorthand,
 
-    /** Render as an `a` tag instead of a `div` and called with event on Card click. */
+    /**
+     * Called on click. When passed, the component renders as an `a`
+     * tag by default instead of a `div`.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
     onClick: PropTypes.func,
 
     /** A Card can be formatted to raise above the page. */
@@ -84,7 +91,7 @@ export default class Card extends Component {
   handleClick = (e) => {
     const { onClick } = this.props
 
-    if (onClick) onClick(e)
+    if (onClick) onClick(e, this.props)
   }
 
   render() {
@@ -118,7 +125,7 @@ export default class Card extends Component {
       if (onClick) return 'a'
     })
 
-    if (children) {
+    if (!_.isNil(children)) {
       return <ElementType {...rest} className={classes} href={href} onClick={this.handleClick}>{children}</ElementType>
     }
 

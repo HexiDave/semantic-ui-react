@@ -15,6 +15,9 @@ import StatisticGroup from './StatisticGroup'
 import StatisticLabel from './StatisticLabel'
 import StatisticValue from './StatisticValue'
 
+/**
+ * A statistic emphasizes the current value of an attribute
+ */
 function Statistic(props) {
   const { children, className, color, floated, horizontal, inverted, label, size, text, value } = props
   const classes = cx(
@@ -30,7 +33,7 @@ function Statistic(props) {
   const rest = getUnhandledProps(Statistic, props)
   const ElementType = getElementType(Statistic, props)
 
-  if (children) {
+  if (!_.isNil(children)) {
     return <ElementType {...rest} className={classes}>{children}</ElementType>
   }
 

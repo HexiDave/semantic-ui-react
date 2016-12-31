@@ -71,7 +71,6 @@ describe('Dropdown Component', () => {
   common.isConformant(Dropdown)
   common.hasUIClassName(Dropdown)
   common.hasSubComponents(Dropdown, [DropdownDivider, DropdownHeader, DropdownItem, DropdownMenu])
-  common.isTabbable(Dropdown)
   common.implementsIconProp(Dropdown)
   common.implementsShorthandProp(Dropdown, {
     propKey: 'header',
@@ -157,6 +156,106 @@ describe('Dropdown Component', () => {
     })
   })
 
+  describe('tabIndex', () => {
+    it('defaults to 0', () => {
+      wrapperShallow(<Dropdown options={options} />)
+
+      wrapper.should.have.prop('tabIndex', 0)
+    })
+    it('defaults to -1 when disabled', () => {
+      wrapperShallow(<Dropdown options={options} disabled />)
+
+      wrapper.should.have.prop('tabIndex', -1)
+    })
+    it('is not present on the root when `search`', () => {
+      wrapperShallow(<Dropdown options={options} selection search />)
+        .should.not.have.prop('tabIndex')
+    })
+    it('defaults the search input to 0', () => {
+      wrapperShallow(<Dropdown options={options} selection search />)
+        .find('input.search')
+        .should.have.prop('tabIndex', 0)
+    })
+    it('defaults the disabled search input to -1', () => {
+      wrapperShallow(<Dropdown options={options} selection search disabled />)
+        .find('input.search')
+        .should.have.prop('tabIndex', -1)
+    })
+    it('allows explicitly setting the search input value', () => {
+      wrapperShallow(<Dropdown options={options} selection search tabIndex={123} />)
+        .find('input.search')
+        .should.have.prop('tabIndex', 123)
+    })
+    it('allows explicitly setting the search input value when disabled', () => {
+      wrapperShallow(<Dropdown options={options} selection search tabIndex={123} disabled />)
+        .find('input.search')
+        .should.have.prop('tabIndex', 123)
+    })
+  })
+
+  describe('aria', () => {
+    it('should label normal dropdown as a listbox', () => {
+      wrapperMount(<Dropdown />)
+      wrapper.find('div').at(0).should.have.prop('role', 'listbox')
+    })
+    it('should label selection dropdown with aria-hidden=true', () => {
+      wrapperMount(<Dropdown selection />)
+      wrapper.find('select').at(0).should.have.prop('aria-hidden', 'true')
+    })
+    it('should label search dropdown as a combobox', () => {
+      wrapperMount(<Dropdown search />)
+      wrapper.find('div').at(0).should.have.prop('role', 'combobox')
+    })
+    it('should label search dropdownMenu as a listbox', () => {
+      wrapperMount(<Dropdown search />)
+      wrapper.find('DropdownMenu').should.have.prop('role', 'listbox')
+    })
+    it('should label search multiple dropdownMenu as aria-multiselectable', () => {
+      wrapperMount(<Dropdown search multiple />)
+      wrapper.find('DropdownMenu').should.have.prop('aria-multiselectable', true)
+    })
+    it('should not label normal dropdownMenu with a role', () => {
+      wrapperMount(<Dropdown />)
+      wrapper.find('DropdownMenu').should.not.have.prop('role')
+    })
+    it('should label disabled dropdown as aria-disabled', () => {
+      wrapperMount(<Dropdown disabled />)
+      wrapper.find('div').at(0).should.have.prop('aria-disabled', true)
+    })
+    it('should label normal dropdown without aria-disabled', () => {
+      wrapperMount(<Dropdown />)
+      wrapper.find('div').at(0).should.not.have.prop('aria-disabled')
+    })
+    it('should label multiple dropdown as aria-multiselectable', () => {
+      wrapperMount(<Dropdown multiple />)
+      wrapper.find('div').at(0).should.have.prop('aria-multiselectable', true)
+    })
+    it('should not label multiple search dropdown as aria-multiselectable', () => {
+      wrapperMount(<Dropdown search multiple />)
+      wrapper.find('div').at(0).should.not.have.prop('aria-multiselectable')
+    })
+    it('should label normal dropdown without aria-multiselectable', () => {
+      wrapperMount(<Dropdown />)
+      wrapper.find('div').at(0).should.not.have.prop('aria-multiselectable')
+    })
+    it('should label loading dropdown as aria-busy', () => {
+      wrapperMount(<Dropdown loading />)
+      wrapper.find('div').at(0).should.have.prop('aria-busy', true)
+    })
+    it('should label normal dropdown without aria-busy', () => {
+      wrapperMount(<Dropdown />)
+      wrapper.find('div').at(0).should.not.have.prop('aria-busy')
+    })
+    it('should label search dropdown input aria-autocomplete=list', () => {
+      wrapperMount(<Dropdown search />)
+      wrapper.find('input').should.have.prop('aria-autocomplete', 'list')
+    })
+    it('should label search dropdown input type=text', () => {
+      wrapperMount(<Dropdown search />)
+      wrapper.find('input').should.have.prop('type', 'text')
+    })
+  })
+
   describe('handleBlur', () => {
     it('passes the event to the onBlur prop', () => {
       const spy = sandbox.spy()
@@ -185,6 +284,13 @@ describe('Dropdown Component', () => {
       wrapperShallow(<Dropdown selectOnBlur />)
         .simulate('blur')
         .should.have.state('focus', false)
+    })
+
+    it('sets searchQuery state to empty', () => {
+      wrapperShallow(<Dropdown />)
+        .setState({ searchQuery: 'foo' })
+        .simulate('blur')
+        .should.have.state('searchQuery', '')
     })
 
     it('does not call onBlur when the mouse is down', () => {
@@ -729,8 +835,8 @@ describe('Dropdown Component', () => {
 
     it('opens on arrow down when focused', () => {
       wrapperMount(<Dropdown options={options} selection />)
-        // Note: This mousedown is necessary to get the Dropdown focused
-        // without it being open.
+      // Note: This mousedown is necessary to get the Dropdown focused
+      // without it being open.
         .simulate('mousedown')
         .simulate('focus')
 
@@ -741,8 +847,8 @@ describe('Dropdown Component', () => {
 
     it('opens on space when focused', () => {
       wrapperMount(<Dropdown options={options} selection />)
-        // Note: This mousedown is necessary to get the Dropdown focused
-        // without it being open.
+      // Note: This mousedown is necessary to get the Dropdown focused
+      // without it being open.
         .simulate('mousedown')
         .simulate('focus')
 
@@ -865,6 +971,10 @@ describe('Dropdown Component', () => {
   describe('open', () => {
     it('defaultOpen opens the menu when true', () => {
       wrapperShallow(<Dropdown options={options} selection defaultOpen />)
+      dropdownMenuIsOpen()
+    })
+    it('defaultOpen opens the menu on search dropdowns', () => {
+      wrapperShallow(<Dropdown search options={options} selection defaultOpen />)
       dropdownMenuIsOpen()
     })
     it('defaultOpen closes the menu when false', () => {
@@ -1026,7 +1136,7 @@ describe('Dropdown Component', () => {
           .at(randomIndex)
           .simulate('click', nativeEvent)
 
-        spy.should.have.been.calledWith(sandbox.match.any, sandbox.match({ value: randomValue }))
+        spy.should.have.been.calledWithMatch({}, { value: randomValue })
       })
     })
     describe('removing items', () => {
@@ -1045,7 +1155,7 @@ describe('Dropdown Component', () => {
           .simulate('click')
 
         spy.should.have.been.calledOnce()
-        spy.should.have.been.calledWith(sandbox.match.any, { name, value: expected })
+        spy.should.have.been.calledWithMatch({}, { name, value: expected })
       })
     })
   })
@@ -1078,7 +1188,7 @@ describe('Dropdown Component', () => {
       domEvent.keyDown(document, { key: 'Backspace' })
 
       spy.should.have.been.calledOnce()
-      spy.should.have.been.calledWith(sandbox.match.any, { name, value: expected })
+      spy.should.have.been.calledWithMatch({}, { name, value: expected })
     })
     it('removes the last item when there is no search query when uncontrolled', () => {
       const name = 'my-dropdown'
@@ -1094,7 +1204,7 @@ describe('Dropdown Component', () => {
       domEvent.keyDown(document, { key: 'Backspace' })
 
       spy.should.have.been.calledOnce()
-      spy.should.have.been.calledWith(sandbox.match.any, { name, value: expected })
+      spy.should.have.been.calledWithMatch({}, { name, value: expected })
 
       wrapper
         .state('value')
@@ -1145,7 +1255,7 @@ describe('Dropdown Component', () => {
         .simulate('click')
 
       spy.should.have.been.calledOnce()
-      spy.should.have.been.calledWith(sandbox.match.any, { name, value: randomValue })
+      spy.should.have.been.calledWithMatch({}, { name, value: randomValue })
     })
     it('is called with event and value when pressing enter on a selected item', () => {
       const name = 'my-dropdown'
@@ -1156,7 +1266,7 @@ describe('Dropdown Component', () => {
       domEvent.keyDown(document, { key: 'Enter' })
 
       spy.should.have.been.calledOnce()
-      spy.should.have.been.calledWith(sandbox.match.any, { name, value: firstValue })
+      spy.should.have.been.calledWithMatch({}, { name, value: firstValue })
     })
     it('is called with event and value when blurring', () => {
       const name = 'my-dropdown'
@@ -1166,7 +1276,7 @@ describe('Dropdown Component', () => {
         .simulate('blur')   // blur should activate selected item
 
       spy.should.have.been.calledOnce()
-      spy.should.have.been.calledWith(sandbox.match.any, { name, value: firstValue })
+      spy.should.have.been.calledWithMatch({}, { name, value: firstValue })
     })
     it('is not called on blur when closed', () => {
       wrapperMount(<Dropdown options={options} selection open={false} onChange={spy} />)
@@ -1313,10 +1423,11 @@ describe('Dropdown Component', () => {
     })
     it('adds options to the hidden select', () => {
       wrapperShallow(<Dropdown options={options} selection />)
-        .should.have.exactly(options.length).descendants('option')
+        .should.have.exactly(options.length + 1).descendants('option')
 
       options.forEach((opt, i) => {
-        const optionElement = wrapper.find('option').at(i)
+        // index is incremented to exclude the empty option value
+        const optionElement = wrapper.find('option').at(i + 1)
 
         optionElement.should.have.prop('value', opt.value)
         optionElement.should.have.text(opt.text)
@@ -1351,23 +1462,6 @@ describe('Dropdown Component', () => {
       searchIsFocused.should.be.true(
         `Expected "input.search" to be the active element but found ${activeElement} instead.`
       )
-    })
-
-    it('removes Dropdown tabIndex', () => {
-      wrapperShallow(<Dropdown options={options} selection search />)
-        .should.not.have.prop('tabIndex')
-    })
-
-    it('has a search input with a tabIndex of 0', () => {
-      wrapperShallow(<Dropdown options={options} selection search />)
-        .find('input.search')
-        .should.have.prop('tabIndex', '0')
-    })
-
-    it('has a search input props-defined tabIndex', () => {
-      wrapperShallow(<Dropdown options={options} selection search tabIndex='123' />)
-        .find('input.search')
-        .should.have.prop('tabIndex', '123')
     })
 
     it('clears the search query when an item is selected', () => {
@@ -1900,7 +1994,7 @@ describe('Dropdown Component', () => {
         .simulate('click')
 
       spy.should.have.been.calledOnce()
-      spy.should.have.been.calledWith(sandbox.match.any, { name, value: 'boo' })
+      spy.should.have.been.calledWithMatch({}, { name, value: 'boo' })
     })
 
     it('calls onAddItem prop when pressing enter on new value', () => {
@@ -1915,7 +2009,7 @@ describe('Dropdown Component', () => {
       domEvent.keyDown(document, { key: 'Enter' })
 
       spy.should.have.been.calledOnce()
-      spy.should.have.been.calledWith(sandbox.match.any, { name, value: 'boo' })
+      spy.should.have.been.calledWithMatch({}, { name, value: 'boo' })
     })
   })
 

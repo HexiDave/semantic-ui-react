@@ -304,10 +304,18 @@ export const isConformant = (Component, options = {}) => {
           'You may need to hoist your event handlers up to the root element.\n'
         )
 
+        let expectedArgs = [eventShape]
+        let errorMessage = 'was not called with (event)'
+
+        if (_.has(Component.propTypes, listenerName)) {
+          expectedArgs = [eventShape, props]
+          errorMessage = 'was not called with (event, data)'
+        }
+
         // Components should return the event first, then any data
-        handlerSpy.calledWithMatch(eventShape).should.equal(true,
+        handlerSpy.calledWithMatch(...expectedArgs).should.equal(true,
           `<${constructorName} ${listenerName}={${handlerName}} />\n` +
-          `${leftPad} ^ was not called with an "${listenerName}" event\n` +
+          `${leftPad} ^ ${errorMessage}\n` +
           'It was called with args:\n' +
           JSON.stringify(handlerSpy.args, null, 2)
         )
@@ -420,24 +428,6 @@ export const hasSubComponents = (Component, subComponents) => {
 }
 
 /**
- * Assert a component can be receive focus via the tab key.
- * @param {React.Component|Function} Component The Component.
- * @param {Object} [options={}]
- * @param {Object} [options.requiredProps={}] Props required to render the component.
- */
-export const isTabbable = (Component, options = {}) => {
-  const { requiredProps = {} } = options
-  const { assertRequired } = commonTestHelpers('isTabbable', Component)
-
-  it('is tabbable', () => {
-    assertRequired(Component, 'a `Component`')
-
-    shallow(<Component {...requiredProps} />)
-      .should.have.attr('tabindex', '0')
-  })
-}
-
-/**
  * Assert a component renders children somewhere in the tree.
  * @param {React.Component|Function} Component A component that should render children.
  * @param {Object} [options={}]
@@ -459,6 +449,11 @@ export const rendersChildren = (Component, options = {}) => {
     const child = <div data-child={faker.hacker.noun()} />
     shallow(createElement(Component, requiredProps, child))
       .should.contain(child)
+  })
+
+  it('renders child number with 0 value', () => {
+    shallow(createElement(Component, requiredProps, 0))
+      .should.contain.text('0')
   })
 }
 
@@ -541,6 +536,10 @@ export const implementsCreateMethod = (Component) => {
     })
     it(`creates a ${name} from a number`, () => {
       isValidElement(Component.create(123))
+        .should.equal(true)
+    })
+    it(`creates a ${name} from a number 0`, () => {
+      isValidElement(Component.create(0))
         .should.equal(true)
     })
     it(`creates a ${name} from a props object`, () => {
@@ -687,6 +686,15 @@ export const implementsShorthandProp = (Component, options = {}) => {
       assertValidShorthand(123)
     })
 
+    // the Input maps shorthand to `type`
+    // React uses the default prop ('text') in place of type={0}
+    if (propKey !== 'input') {
+      it(`renders a ${name} from number 0`, () => {
+        consoleUtil.disableOnce()
+        assertValidShorthand(0)
+      })
+    }
+
     it(`renders a ${name} from a props object`, () => {
       consoleUtil.disableOnce()
       assertValidShorthand(mapValueToProps('foo'))
@@ -760,6 +768,28 @@ export const implementsHTMLInputProp = (Component, options = {}) => {
     propKey: 'input',
     ShorthandComponent: 'input',
     mapValueToProps: val => ({ type: val }),
+    requiredProps: {},
+    shorthandDefaultProps: {},
+    ...options,
+  })
+}
+
+/**
+ * Assert that a Component correctly implements an HTML label shorthand prop.
+ *
+ * @param {function} Component The component to test.
+ * @param {object} [options={}]
+ * @param {string} [options.propKey='icon'] The name of the shorthand prop.
+ * @param {string|function} [options.ShorthandComponent] The component that should be rendered from the shorthand value.
+ * @param {function} [options.mapValueToProps] A function that maps a primitive value to the Component props
+ * @param {Object} [options.requiredProps={}] Props required to render the component.
+ * @param {Object|function} [options.shorthandDefaultProps={}] Props required to render the shorthand component.
+ */
+export const implementsHTMLLabelProp = (Component, options = {}) => {
+  implementsShorthandProp(Component, {
+    propKey: 'label',
+    ShorthandComponent: 'label',
+    mapValueToProps: val => ({ children: val }),
     requiredProps: {},
     shorthandDefaultProps: {},
     ...options,

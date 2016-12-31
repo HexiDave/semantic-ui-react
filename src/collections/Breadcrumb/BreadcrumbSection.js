@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import cx from 'classnames'
 import React, { Component, PropTypes } from 'react'
 
@@ -42,7 +43,13 @@ export default class BreadcrumbSection extends Component {
       PropTypes.string,
     ]),
 
-    /** Render as an `a` tag instead of a `div` and called with event on Section click. */
+    /**
+     * Called on click. When passed, the component will render as an `a`
+     * tag by default instead of a `div`.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props.
+     */
     onClick: PropTypes.func,
   }
 
@@ -55,7 +62,7 @@ export default class BreadcrumbSection extends Component {
   handleClick = (e) => {
     const { onClick } = this.props
 
-    if (onClick) onClick(e)
+    if (onClick) onClick(e, this.props)
   }
 
   render() {
@@ -81,10 +88,10 @@ export default class BreadcrumbSection extends Component {
 
     return (
       <ElementType {...rest} className={classes} href={href} onClick={this.handleClick}>
-        {children || content}
+        {_.isNil(children) ? content : children}
       </ElementType>
     )
   }
 }
 
-BreadcrumbSection.create = createShorthandFactory(BreadcrumbSection, content => ({ content, link: true }))
+BreadcrumbSection.create = createShorthandFactory(BreadcrumbSection, content => ({ content, link: true }), true)

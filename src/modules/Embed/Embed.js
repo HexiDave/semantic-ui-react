@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import cx from 'classnames'
 import React, { PropTypes } from 'react'
 
@@ -86,7 +87,12 @@ export default class Embed extends Component {
     /** Specifies an icon to use with placeholder content. */
     icon: customPropTypes.itemShorthand,
 
-    /** Сalled with event on Embed click with (event, props). */
+    /**
+     * Сalled on click.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
     onClick: PropTypes.func,
 
     /** A placeholder image for embed. */
@@ -149,7 +155,7 @@ export default class Embed extends Component {
     const { onClick } = this.props
     const { active } = this.state
 
-    if (onClick) onClick(e, this.props)
+    if (onClick) onClick(e, { ...this.props, active: true })
     if (!active) this.trySetState({ active: true })
   }
 
@@ -181,7 +187,7 @@ export default class Embed extends Component {
     const { active } = this.state
 
     if (!active) return null
-    if (children) return <div className='embed'>{children}</div>
+    if (!_.isNil(children)) return <div className='embed'>{children}</div>
 
     return (
       <div className='embed'>
