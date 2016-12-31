@@ -136,6 +136,38 @@ class Modal extends Component {
     this.handlePortalUnmount()
   }
 
+  addClasses = (...classes) => {
+    const { mountNode } = this.props;
+
+    classes.forEach(className => {
+      mountNode.classList.add(className);
+
+      const countName = `${className}_count`;
+
+      const currentCount = mountNode[countName];
+
+      mountNode[countName] = currentCount === undefined ? 1 : currentCount + 1;
+    })
+  }
+
+  removeClasses = (...classes) => {
+    const { mountNode } = this.props;
+
+    classes.forEach(className => {
+      const countName = `${className}_count`;
+
+      const mountCountValue = mountNode[countName];
+
+      const currentCount = mountCountValue === undefined ? 0 : mountCountValue - 1;
+
+      if (currentCount === 0) {
+        mountNode.classList.remove(className);
+      }
+
+      mountNode[countName] = currentCount;
+    })
+  }
+
   handleClose = (e) => {
     debug('close()')
 
@@ -156,15 +188,15 @@ class Modal extends Component {
 
   handlePortalMount = (e) => {
     debug('handlePortalMount()')
-    const { dimmer, mountNode } = this.props
+    const { dimmer } = this.props
 
     if (dimmer) {
       debug('adding dimmer')
-      mountNode.classList.add('dimmable', 'dimmed')
+      this.addClasses('dimmable', 'dimmed')
 
       if (dimmer === 'blurring') {
         debug('adding blurred dimmer')
-        mountNode.classList.add('blurring')
+        this.addClasses('blurring')
       }
     }
 
@@ -180,8 +212,19 @@ class Modal extends Component {
     // Always remove all dimmer classes.
     // If the dimmer value changes while the modal is open, then removing its
     // current value could leave cruft classes previously added.
-    const { mountNode } = this.props
-    mountNode.classList.remove('blurring', 'dimmable', 'dimmed', 'scrollable')
+    const { dimmer } = this.props
+
+    if (dimmer) {
+      this.removeClasses('dimmable', 'dimmed');
+
+      if (dimmer === 'blurring') {
+        this.removeClasses('blurring');
+      }
+    }
+
+    if (this.state.scrolling) {
+      this.removeClasses('scrolling')
+    }
 
     cancelAnimationFrame(this.animationRequestId)
 
@@ -207,9 +250,9 @@ class Modal extends Component {
         newState.scrolling = scrolling
 
         if (scrolling) {
-          mountNode.classList.add('scrolling')
+          this.addClasses('scrolling')
         } else {
-          mountNode.classList.remove('scrolling')
+          this.removeClasses('scrolling')
         }
       }
 
