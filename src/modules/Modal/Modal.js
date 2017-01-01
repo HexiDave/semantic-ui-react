@@ -130,6 +130,12 @@ class Modal extends Component {
   static Actions = ModalActions
 
   state = {}
+  
+  constructor(props) {
+    super(props);
+
+    this._classes = {};
+  }
 
   componentWillUnmount() {
     debug('componentWillUnmount()')
@@ -141,6 +147,7 @@ class Modal extends Component {
 
     classes.forEach(className => {
       mountNode.classList.add(className);
+      this._classes[className] = true;
 
       const countName = `${className}_count`;
 
@@ -154,18 +161,22 @@ class Modal extends Component {
     const { mountNode } = this.props;
 
     classes.forEach(className => {
-      const countName = `${className}_count`;
+      if (this._classes[className]) {
+        this._classes[className] = false;
 
-      const mountCountValue = mountNode[countName];
+        const countName = `${className}_count`;
 
-      const currentCount = mountCountValue === undefined ? 0 : mountCountValue - 1;
+        const mountCountValue = mountNode[countName];
 
-      if (currentCount <= 0) {
-        mountNode.classList.remove(className);
-        delete mountNode[countName];
+        const currentCount = mountCountValue === undefined ? 0 : mountCountValue - 1;
+
+        if (currentCount <= 0) {
+          mountNode.classList.remove(className);
+          delete mountNode[countName];
+        }
+
+        mountNode[countName] = Math.max(currentCount, 0);
       }
-
-      mountNode[countName] = Math.max(currentCount, 0);
     })
   }
 
@@ -199,6 +210,10 @@ class Modal extends Component {
         debug('adding blurred dimmer')
         this.addClasses('blurring')
       }
+    }
+	
+	if (this.state.scrolling) {
+      this.addClasses('scrolling')
     }
 
     this.setPosition()
