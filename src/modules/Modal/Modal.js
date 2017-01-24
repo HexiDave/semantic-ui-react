@@ -26,7 +26,7 @@ const _meta = {
   name: 'Modal',
   type: META.TYPES.MODULE,
   props: {
-    size: ['fullscreen', 'large', 'small'],
+    size: ['fullscreen', 'large', 'small', 'tiny'],
     dimmer: ['inverted', 'blurring'],
   },
 }
