@@ -38,7 +38,7 @@ function FormField(props) {
     required,
     type,
     width,
-    modified,
+    dirty,
   } = props
 
   const classes = cx(
@@ -46,7 +46,7 @@ function FormField(props) {
     useKeyOnly(error, 'error'),
     useKeyOnly(inline, 'inline'),
     useKeyOnly(required, 'required'),
-    useKeyOnly(modified, 'modified'),
+    useKeyOnly(dirty, 'dirty'),
     useWidthProp(width, 'wide'),
     'field',
     className,
@@ -170,6 +170,8 @@ FormField.propTypes = {
 
   /** A field can specify its width in grid columns */
   width: PropTypes.oneOf(FormField._meta.props.width),
+
+  dirty: PropTypes.bool,
 }
 
 export default FormField
