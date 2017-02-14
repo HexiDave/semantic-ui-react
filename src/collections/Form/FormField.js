@@ -38,6 +38,7 @@ function FormField(props) {
     required,
     type,
     width,
+    modified,
   } = props
 
   const classes = cx(
@@ -45,6 +46,7 @@ function FormField(props) {
     useKeyOnly(error, 'error'),
     useKeyOnly(inline, 'inline'),
     useKeyOnly(required, 'required'),
+    useKeyOnly(modified, 'modified'),
     useWidthProp(width, 'wide'),
     'field',
     className,
