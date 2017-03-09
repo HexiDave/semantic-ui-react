@@ -917,7 +917,7 @@ export default class Dropdown extends Component {
     if (onOpen) onOpen(e, this.props)
 
     this.trySetState({ open: true })
-    this.scrollSelectedItemIntoView();
+    setTimeout(::this.scrollSelectedItemIntoView)
   }
 
   close = (e) => {
