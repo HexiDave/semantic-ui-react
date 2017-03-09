@@ -894,7 +894,7 @@ export default class Dropdown extends Component {
     debug('scrollSelectedItemIntoView()')
     // Do not access document when server side rendering
     if (!isBrowser) return
-    const menu = document.querySelector('.ui.dropdown.active.visible .menu.visible')
+    const menu = this._dropdown.querySelector('.menu.visible')
     const item = menu.querySelector('.item.selected')
     debug(`menu: ${menu}`)
     debug(`item: ${item}`)
@@ -917,6 +917,7 @@ export default class Dropdown extends Component {
     if (onOpen) onOpen(e, this.props)
 
     this.trySetState({ open: true })
+    this.scrollSelectedItemIntoView();
   }
 
   close = (e) => {
