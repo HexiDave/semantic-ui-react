@@ -352,10 +352,18 @@ export default class Dropdown extends Component {
     type: META.TYPES.MODULE,
   }
 
+  static childContextTypes = {
+    closeFunc: PropTypes.func
+  }
+
   static Divider = DropdownDivider
   static Header = DropdownHeader
   static Item = DropdownItem
   static Menu = DropdownMenu
+
+  getChildContext() {
+    return {closeFunc: this.close}
+  }
 
   componentWillMount() {
     if (super.componentWillMount) super.componentWillMount()

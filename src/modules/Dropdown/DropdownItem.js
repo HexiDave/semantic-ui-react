@@ -86,10 +86,16 @@ class DropdownItem extends Component {
     type: META.TYPES.MODULE,
   }
 
+  static contextTypes = {
+      closeFunc: PropTypes.func
+  }
+
   handleClick = (e) => {
     const { onClick } = this.props
 
     if (onClick) onClick(e, this.props)
+
+    this.context.closeFunc()
   }
 
   render() {
